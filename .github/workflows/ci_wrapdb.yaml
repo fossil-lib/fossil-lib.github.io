@@ -33,7 +33,7 @@ jobs:
           brew install cppcheck
     - name: Setup Build Directory
       run: |
-            scan-build meson setup builddir -Dwith_xunit=enabled
+            scan-build meson setup builddir
     - name: Scan Compile Commands
       run: |
             cppcheck --project=builddir/compile_commands.json
@@ -68,7 +68,7 @@ jobs:
           pip install meson==1.0.0 ninja==1.11.1
     - name: Setup Build Directory
       run: |
-            meson setup builddir -Dwith_xunit=enabled
+            meson setup builddir
     - name: Compile Source Code
       run: |
             meson compile -C builddir -v
@@ -94,7 +94,7 @@ jobs:
           sudo apt-get install -y cppcheck gcc
     - name: Setup Build Directory
       run: |
-            scan-build meson setup builddir -Dwith_xunit=enabled
+            scan-build meson setup builddir
     - name: Scan Compile Commands
       run: |
             cppcheck --project=builddir/compile_commands.json
