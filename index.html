@@ -36,10 +36,10 @@
     <table>
         <thead>
             <tr>
-                <th>Project</th>
+                <th>Fossil Project</th>
                 <th>Description</th>
-                <th>URL</th>
-                <th>Revision</th>
+                <th>GitHub URL</th>
+                <th>WrapDB URL</th>
                 <th>License</th>
                 <th>Languages</th>
             </tr>
@@ -60,7 +60,7 @@
                         <td>${project.project}</td>
                         <td>${project.description}</td>
                         <td><a href="${project.url}" target="_blank">${project.url}</a></td>
-                        <td>${project.revision}</td>
+                        <td><a href="${project.wrap_url}" target="_blank">${project.wrap_url}</a></td>
                         <td>${project.license}</td>
                         <td>${project.languages.join(', ')}</td>
                     `;
