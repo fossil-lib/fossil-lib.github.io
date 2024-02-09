@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fossil Logic Wraps Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: black;
+            color: #ADD8E6; /* Light Blue */
+        }
+        h1 {
+            text-align: center;
+        }
+        .project-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            display: inline-block;
+            width: 300px;
+            background-color: #333;
+            color: #fff; /* White */
+        }
+    </style>
+</head>
+<body>
+    <h1>Fossil Logic Wraps Dashboard</h1>
+    <div id="dashboard"></div>
+
+    <script>
+        // Fetch the JSON file
+        fetch('fscl-project.json')
+            .then(response => response.json())
+            .then(data => {
+                // Create a dashboard from the JSON data
+                const dashboardElement = document.getElementById('dashboard');
+                data.projects.forEach(project => {
+                    const projectCard = document.createElement('div');
+                    projectCard.classList.add('project-card');
+                    projectCard.innerHTML = `
+                        <h2>${project.project}</h2>
+                        <p><strong>Description:</strong> ${project.description}</p>
+                        <p><strong>URL:</strong> <a href="${project.url}" target="_blank">${project.url}</a></p>
+                        <p><strong>Revision:</strong> ${project.revision}</p>
+                        <p><strong>License:</strong> ${project.license}</p>
+                    `;
+                    dashboardElement.appendChild(projectCard);
+                });
+            })
+            .catch(error => console.error('Error fetching JSON:', error));
+    </script>
+</body>
+</html>
