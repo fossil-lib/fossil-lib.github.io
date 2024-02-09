@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fossil WrapDB</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -34,17 +35,30 @@
             background-color: #333;
             color: white;
         }
+        input[type="search"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
-    <h1>Fossil Logic Wraps Dashboard</h1>
-    <p>Fossil WrapDB is a repository for Fossil Logic wrap files, providing a centralized location to access and manage Fossil Logic libraries. The table below lists various Fossil Logic projects along with links to their respective repositories and wrap files hosted on Fossil WrapDB.</p>
+    <h1>Fossil WrapDB</h1>
+    <p>Fossil WrapDB serves as a dedicated repository for Fossil Logic wrap files, offering a centralized hub for accessing and overseeing Fossil Logic libraries. This platform provides a unified and organized space to efficiently explore and manage various Fossil Logic projects. The table presented below provides an extensive list of Fossil Logic initiatives, complete with direct links to their corresponding repositories and associated wrap files hosted on Fossil WrapDB. This comprehensive directory facilitates streamlined navigation and discovery of Fossil Logic libraries, enhancing the overall accessibility and management experience for users.</p>
+    
+    <label for="languageInput">Filter by Language:</label>
+    <input type="text" id="languageInput" placeholder="Enter language..." oninput="filterByLanguage()">
+    
+    <label for="nameInput">Filter by Name:</label>
+    <input type="text" id="nameInput" placeholder="Enter project name..." oninput="filterByName()">
+    
     <table>
         <thead>
             <tr>
-                <th>Fossil Project</th>
+                <th>Project</th>
                 <th>Description</th>
-                <th>GitHub URL</th>
+                <th>Repo URL</th>
                 <th>Wrap URL</th>
                 <th>License</th>
                 <th>Languages</th>
@@ -63,17 +77,61 @@
                 data.projects.forEach(project => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                        <td>${project.project}</td>
-                        <td>${project.description}</td>
-                        <td><a href="${project.url}" target="_blank">${project.url}</a></td>
-                        <td><a href="${project.wrap_url}" target="_blank">${project.wrap_url}</a></td>
-                        <td>${project.license}</td>
-                        <td>${project.languages.join(', ')}</td>
+                        <td>${encodeHTML(project.project)}</td>
+                        <td>${encodeHTML(project.description)}</td>
+                        <td><a href="${encodeHTML(project.url)}" target="_blank">${encodeHTML(project.url)}</a></td>
+                        <td><a href="${encodeHTML(project.wrap_url)}" target="_blank">${encodeHTML(project.wrap_url)}</a></td>
+                        <td>${encodeHTML(project.license)}</td>
+                        <td>${encodeHTML(project.languages.join(', '))}</td>
                     `;
                     dashboardElement.appendChild(row);
                 });
             })
             .catch(error => console.error('Error fetching JSON:', error));
+
+        // Function to encode HTML entities
+        function encodeHTML(text) {
+            return document.createElement('div').appendChild(document.createTextNode(text)).parentNode.innerHTML;
+        }
+
+        // Filter by language
+        function filterByLanguage() {
+            const languageInput = document.getElementById('languageInput');
+            const filter = languageInput.value.toLowerCase();
+            filterList(filter, 'languages');
+        }
+
+        // Filter by name
+        function filterByName() {
+            const nameInput = document.getElementById('nameInput');
+            const filter = nameInput.value.toLowerCase();
+            filterList(filter, 'project');
+        }
+
+        // General filter function
+        function filterList(filter, key) {
+            const dashboardRows = document.querySelectorAll('#dashboard tr');
+
+            dashboardRows.forEach(row => {
+                const cell = row.querySelector(`td:nth-child(${getColumnIndex(key)})`);
+                if (cell) {
+                    const cellText = cell.textContent.toLowerCase();
+                    row.style.display = cellText.includes(filter) ? '' : 'none';
+                }
+            });
+        }
+
+        // Function to get the column index based on the key
+        function getColumnIndex(key) {
+            switch (key) {
+                case 'project':
+                    return 1;
+                case 'languages':
+                    return 6;
+                default:
+                    return 1;
+            }
+        }
     </script>
 </body>
 </html>
