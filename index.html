@@ -3,81 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fossil WrapDB - Dashboard</title>
-    <link rel="stylesheet" href="assets/styles.css"> <!-- Link to the external CSS file -->
+    <title>Fossil WrapDB</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the external CSS file -->
 </head>
 <body>
-    <h1>Fossil WrapDB - Dashboard</h1>
+    <h1>About Fossil WrapDB</h1>
 
-    <label for="searchInput">Search:</label>
-    <input type="search" id="searchInput" placeholder="Enter search terms..." oninput="filterList()">
+    <p>Welcome to Fossil WrapDB, your centralized repository for Fossil Logic wrap files. We are committed to providing a platform that simplifies the discovery, access, and management of Fossil Logic libraries. Here's what you need to know about us:</p>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Project</th>
-                <th>Description</th>
-                <th>Repo URL</th>
-                <th>Wrap URL</th>
-                <th>License</th>
-                <th>Languages</th>
-            </tr>
-        </thead>
-        <tbody id="dashboard"></tbody>
-    </table>
+    <h2>Our Mission</h2>
+    <p>At Fossil WrapDB, our mission is to create a seamless experience for developers and users seeking Fossil Logic libraries. We aim to foster collaboration, innovation, and efficiency in software development by offering a curated collection of high-quality wrap files.</p>
 
-    <script>
-        // Function to fetch JSON data
-        async function fetchData() {
-            try {
-                const response = await fetch('fscl-project.json');
-                const data = await response.json();
-                displayProjects(data.projects);
-            } catch (error) {
-                console.error('Error fetching JSON:', error);
-            }
-        }
+    <h2>What We Offer</h2>
+    <p>Fossil WrapDB serves as a hub for accessing a diverse range of Fossil Logic projects. From foundational libraries to specialized tools, our platform provides a comprehensive overview of available resources. Developers can explore project details, access repository links, and easily integrate Fossil Logic libraries into their projects.</p>
 
-        // Display projects on page load
-        fetchData();
+    <h2>Community Involvement</h2>
+    <p>We value community participation and contributions. Fossil WrapDB is designed to be an open and collaborative platform. Developers and contributors are encouraged to actively engage with the community, share their projects, and contribute to the growth of Fossil Logic libraries.</p>
 
-        // Function to display projects
-        function displayProjects(projects) {
-            const dashboardElement = document.getElementById('dashboard');
-            dashboardElement.innerHTML = '';
+    <h2>Contact Us</h2>
+    <p>If you have questions, feedback, or suggestions, feel free to reach out to us. Your input is valuable in shaping the future of Fossil WrapDB. Contact us at <a href="mailto:michaelbrockus@gmail.com">info@fossilwrapdb.com</a>.</p>
 
-            projects.forEach(project => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${encodeHTML(project.project)}</td>
-                    <td>${encodeHTML(project.description)}</td>
-                    <td><a href="${encodeHTML(project.url)}" target="_blank">${encodeHTML(project.url)}</a></td>
-                    <td><a href="${encodeHTML(project.wrap_url)}" target="_blank">${encodeHTML(project.wrap_url)}</a></td>
-                    <td>${encodeHTML(project.license)}</td>
-                    <td>${encodeHTML(project.languages.join(', '))}</td>
-                `;
-                dashboardElement.appendChild(row);
-            });
-        }
-
-        // Function to encode HTML entities
-        function encodeHTML(text) {
-            return document.createElement('div').appendChild(document.createTextNode(text)).parentNode.innerHTML;
-        }
-
-        // Function to filter the list
-        function filterList() {
-            const searchInput = document.getElementById('searchInput');
-            const filter = searchInput.value.toLowerCase();
-
-            const filteredProjects = projects.filter(project =>
-                Object.values(project).some(value =>
-                    typeof value === 'string' && value.toLowerCase().includes(filter)
-                )
-            );
-
-            displayProjects(filteredProjects);
-        }
-    </script>
+    <!-- Add your footer here -->
 </body>
 </html>
