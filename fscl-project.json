@@ -1,0 +1,74 @@
+{
+  "projects": [
+    {
+      "project": "fscl-xtest-c",
+      "description": "Elevate your software testing experience with Fossil XTest. This library is a testament to our commitment to quality assurance, providing a comprehensive suite of tools and functionalities to streamline and enhance the testing process. With Fossil XTest, ensure the robustness of your applications through thorough and efficient testing methodologies.",
+      "url": "https://github.com/fossil-lib/fscl-xtest-c",
+      "revision": "latest",
+      "license": "MPL 2.0"
+    },
+    {
+      "project": "fscl-xmock-c",
+      "description": "Fossil XMock brings innovation to the forefront of software development by offering a powerful mocking library. Crafted with precision, this library empowers developers to simulate and control various aspects of their code environment, facilitating effective testing and validation. Fossil XMock is your go-to solution for creating realistic and controlled scenarios during the development lifecycle.",
+      "url": "https://github.com/fossil-lib/fscl-xmock-c",
+      "revision": "latest",
+      "license": "MPL 2.0"
+    },
+    {
+      "project": "fscl-xcore-c",
+      "description": "At the heart of every powerful application lies a strong core. Fossil XCore is the foundational library that forms the backbone of your software architecture. With modular and extensible components, this library ensures a robust and scalable structure for your projects, setting the stage for the seamless integration of other Fossil Logic libraries.",
+      "url": "https://github.com/fossil-lib/fscl-xcore-c",
+      "revision": "latest",
+      "license": "MPL 2.0"
+    },
+    {
+      "project": "fscl-xutil-c",
+      "description": "Streamline your development workflow with Fossil XUtility. This library is a treasure trove of utility functions and tools designed to simplify common programming tasks. From file manipulation to data transformation, Fossil XUtility empowers developers with a versatile set of functionalities, enhancing efficiency and code readability.",
+      "url": "https://github.com/fossil-lib/fscl-xutil-c",
+      "revision": "latest",
+      "license": "MPL 2.0"
+    },
+    {
+      "project": "fscl-xdata-c",
+      "description": "Unleash the power of optimized data structures with Fossil XData Structures. This library is engineered to provide efficient and reliable implementations of essential data structures, optimizing the performance of your applications. From arrays to trees, Fossil XData Structures ensures that your code operates with precision and speed.",
+      "url": "https://github.com/fossil-lib/fscl-xdata-c",
+      "revision": "latest",
+      "license": "MPL 2.0"
+    },
+    {
+      "project": "fscl-xscience-c",
+      "description": "Fossil XScience is the library where code meets scientific innovation. Whether you're working on complex algorithms or data analysis, this library provides a robust set of tools and functions to support your scientific endeavors. Elevate your projects with Fossil XScience and unlock the potential for groundbreaking advancements.",
+      "url": "https://github.com/fossil-lib/fscl-xscience-c",
+      "revision": "latest",
+      "license": "MPL 2.0"
+    },
+    {
+      "project": "fscl-xstring-c",
+      "description": "String manipulation becomes an art with Fossil XString. This library is designed to handle strings with finesse, offering a comprehensive set of functions for parsing, formatting, and transforming text. Fossil XString empowers developers to work with strings efficiently, ensuring clarity and precision in every operation.",
+      "url": "https://github.com/fossil-lib/fscl-xstring-c",
+      "revision": "latest",
+      "license": "MPL 2.0"
+    },
+    {
+      "project": "fscl-xfish-c",
+      "description": "Dive into the world of artificial intelligence with XFish AI by Fossil Logic. This library is a sophisticated toolkit for implementing intelligent algorithms and machine learning models. Whether you're exploring data patterns or creating smart applications, XFish AI provides the tools to infuse your projects with the transformative power of AI.",
+      "url": "https://github.com/fossil-lib/fscl-xfish-c",
+      "revision": "latest",
+      "license": "MPL 2.0"
+    },
+    {
+      "project": "fscl-xcude-c",
+      "description": "Unleash your creativity in the visual realm with XCude 2D Graphics. This library is a powerhouse for 2D graphics, offering a versatile set of tools and functions to bring your visualizations to life. From rendering to animation, XCude 2D Graphics empowers developers to craft visually stunning and immersive user experiences.",
+      "url": "https://github.com/fossil-lib/fscl-xcude-c",
+      "revision": "latest",
+      "license": "MPL 2.0"
+    },
+    {
+      "project": "fscl-xpattern-c",
+      "description": "The XPattern library offers a pragmatic approach to solving common programming challenges, providing a set of versatile patterns and solutions tailored to streamline development. Whether you're dealing with lazy evaluation, constraints handling, or implementing observer patterns, XPattern equips you with the tools you need to build robust and adaptable software solutions. XPattern serves as a foundational building block for your software endeavors, offering essential core functionalities that simplify the development process and provide a solid framework for your applications. With XPattern, you can create software that not only meets your current requirements but also remains flexible enough to adapt to the evolving needs of your projects.",
+      "url": "https://github.com/fossil-lib/fscl-xpattern-c",
+      "revision": "latest",
+      "license": "MPL 2.0"
+    }
+  ]
+}
