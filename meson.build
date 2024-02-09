@@ -2,7 +2,7 @@ project('Fossil WrapDB', 'c', 'cpp',
     meson_version: '>=1.0.0',
     version: '0.1.0',
     subproject_dir: 'wrap',
-    default_options: ['c_std=c18', 'cpp_std=c17', 'werror=true', 'buildtype=minsize'])
+    default_options: ['c_std=c18', 'cpp_std=c++17', 'werror=true', 'buildtype=minsize'])
 
 deps_c = [
     dependency('fscl-xtest-c'),
