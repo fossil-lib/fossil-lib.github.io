@@ -1,0 +1,9 @@
+# ================ #
+#  FSCL Wrap File. #
+# ================ #
+[wrap-git]
+url = https://github.com/fossil-lib/fscl-xscience-c.git
+revision = main
+
+[provide]
+fscl-xscience-c = fscl_xscience_c_dep
