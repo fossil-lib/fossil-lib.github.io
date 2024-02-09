@@ -52,18 +52,6 @@ th {
     color: white;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: white;
-    color: #333; /* Dark Gray */
-}
-
-header {
-    background-color: #333; /* Dark Gray */
-    padding: 10px;
-}
-
 h1 {
     color: white;
     margin: 0;
