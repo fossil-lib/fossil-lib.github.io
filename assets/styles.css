@@ -1,5 +1,9 @@
 /* styles.css */
 
+.wrapper {
+    display: flex;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
