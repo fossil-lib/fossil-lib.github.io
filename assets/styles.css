@@ -1,0 +1,43 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: black;
+    color: #ADD8E6; /* Light Blue */
+}
+
+h1 {
+    text-align: center;
+    color: orange; /* Orange */
+}
+
+p {
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #333;
+    color: white;
+}
+
+input[type="search"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
