@@ -3,41 +3,62 @@
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
-    background-color: black;
-    color: #ADD8E6; /* Light Blue */
+    background-color: white;
+    color: #333; /* Dark Gray */
+}
+
+header {
+    background-color: #333; /* Dark Gray */
+    padding: 10px;
 }
 
 h1 {
-    text-align: center;
-    color: orange; /* Orange */
+    color: white;
+    margin: 0;
 }
 
-p {
-    text-align: center;
-    font-style: italic;
-    margin-bottom: 20px;
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: center; /* Center the menu items on mobile */
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
+nav li {
+    display: inline;
+    margin-right: 10px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff; /* White */
+    padding: 8px 12px;
+    border-radius: 4px;
+    background-color: #555; /* Gray */
+    display: inline-block; /* Ensure the links are block elements on mobile */
+    margin-bottom: 5px; /* Add some spacing between buttons on mobile */
+}
+
+nav a:hover {
+    background-color: #777; /* Darker Gray */
+}
+
+section {
     margin-top: 20px;
 }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-}
+/* Mobile Styles */
+@media only screen and (max-width: 600px) {
+    body {
+        font-size: 14px; /* Adjust font size for better readability on smaller screens */
+    }
 
-th {
-    background-color: #333;
-    color: white;
-}
+    nav ul {
+        text-align: center;
+    }
 
-input[type="search"] {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
+    nav li {
+        display: block;
+        margin-bottom: 10px;
+    }
 }
