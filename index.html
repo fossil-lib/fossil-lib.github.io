@@ -15,21 +15,36 @@
             text-align: center;
             color: orange; /* Orange */
         }
-        .project-card {
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
             border: 1px solid #ddd;
-            border-radius: 5px;
             padding: 10px;
-            margin: 10px;
-            display: inline-block;
-            width: 300px;
+            text-align: left;
+        }
+        th {
             background-color: #333;
-            color: #fff; /* White */
+            color: white;
         }
     </style>
 </head>
 <body>
     <h1>Fossil Logic Wraps Dashboard</h1>
-    <div id="dashboard"></div>
+    <table>
+        <thead>
+            <tr>
+                <th>Project</th>
+                <th>Description</th>
+                <th>URL</th>
+                <th>Revision</th>
+                <th>License</th>
+            </tr>
+        </thead>
+        <tbody id="dashboard"></tbody>
+    </table>
 
     <script>
         // Fetch the JSON file
@@ -39,16 +54,15 @@
                 // Create a dashboard from the JSON data
                 const dashboardElement = document.getElementById('dashboard');
                 data.projects.forEach(project => {
-                    const projectCard = document.createElement('div');
-                    projectCard.classList.add('project-card');
-                    projectCard.innerHTML = `
-                        <h2>${project.project}</h2>
-                        <p><strong>Description:</strong> ${project.description}</p>
-                        <p><strong>URL:</strong> <a href="${project.url}" target="_blank">${project.url}</a></p>
-                        <p><strong>Revision:</strong> ${project.revision}</p>
-                        <p><strong>License:</strong> ${project.license}</p>
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${project.project}</td>
+                        <td>${project.description}</td>
+                        <td><a href="${project.url}" target="_blank">${project.url}</a></td>
+                        <td>${project.revision}</td>
+                        <td>${project.license}</td>
                     `;
-                    dashboardElement.appendChild(projectCard);
+                    dashboardElement.appendChild(row);
                 });
             })
             .catch(error => console.error('Error fetching JSON:', error));
