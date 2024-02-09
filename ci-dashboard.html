@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Action Status Dashboard</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the external CSS file -->
+</head>
+<body>
+    <header>
+        <h1>GitHub Action Status Dashboard</h1>
+        <!-- Include the menu -->
+        <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="fossil-wrapdb.html">Fossil WrapDB</a></li>
+        <li><a href="meson-wrapdb.html">Meson WrapDB</a></li>
+        <li><a href="ci-dashboard">CI Dashboard</a></li>
+        </ul>
+    </header>
+
+    <section>
+        <label for="repoInput">Repository:</label>
+        <input type="text" id="repoInput" placeholder="Enter GitHub repo (owner/repo)" oninput="updateStatus()">
+
+        <div id="status"></div>
+    </section>
+
+    <!-- Add your footer here -->
+    <script>
+        function updateStatus() {
+            const repoInput = document.getElementById('repoInput');
+            const repo = repoInput.value.trim();
+            const statusElement = document.getElementById('status');
+
+            // Clear previous status
+            statusElement.innerHTML = '';
+
+            if (!repo) {
+                statusElement.textContent = 'Please enter a GitHub repository.';
+                return;
+            }
+
+            // Fetch GitHub Action status using GitHub REST API
+            fetch(`https://api.github.com/repos/${repo}/actions/runs`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.total_count > 0) {
+                        // Display status information
+                        const latestRun = data.workflow_runs[0];
+                        statusElement.innerHTML = `
+                            <h3>Latest Run:</h3>
+                            <p>Status: ${latestRun.status}</p>
+                            <p>Conclusion: ${latestRun.conclusion}</p>
+                            <p>Created at: ${new Date(latestRun.created_at).toLocaleString()}</p>
+                        `;
+                    } else {
+                        statusElement.textContent = 'No GitHub Actions runs found for the specified repository.';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching GitHub Actions status:', error);
+                    statusElement.textContent = 'Error fetching GitHub Actions status. Please try again later.';
+                });
+        }
+    </script>
+</body>
+</html>
