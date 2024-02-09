@@ -3,6 +3,58 @@
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
+    background-color: #1c1c1c; /* Dark background color */
+    color: #ADD8E6; /* Light Blue text color */
+}
+
+header {
+    background-color: #333; /* Dark background color for the header */
+    padding: 10px;
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #ADD8E6; /* Light Blue text color for navigation links */
+    font-weight: bold;
+}
+
+section {
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #333; /* Dark background color for table header */
+    color: white;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
     background-color: white;
     color: #333; /* Dark Gray */
 }
