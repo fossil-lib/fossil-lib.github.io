@@ -27,20 +27,25 @@
     <div class="search-container">
         <input type="text" id="searchInput" placeholder="Search by name...">
     </div>
+
     <div class="dashboard" id="dashboard">
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Short Description</th>
-                    <th>License</th>
-                    <th>Author</th>
-                    <th>Release Date</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <!-- Table headers -->
+                <th>Name</th>
+                <th>Short Description</th>
+                <th>License</th>
+                <th>Author</th>
+                <th>Release Date</th>
+            </tr>
+        </thead>
+            <tbody id="tableBody">
+                <!-- Rows will be added here dynamically -->
+            </tbody>
         </table>
     </div>
+
     <script src="assets/dash.js"></script>
     <script src="assets/search.js"></script>
 </body>
