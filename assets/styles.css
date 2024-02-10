@@ -16,6 +16,10 @@ header {
     align-items: center; /* Center items vertically in the flex container */
 }
 
+.mpl-licensed {
+        background-color: #c0e218; /* Apply a background color for MPL 2.0 licensed rows */
+}
+
 .header img {
     margin-right: 10px; /* Add margin to the right of the logo for spacing */
 }
