@@ -87,8 +87,41 @@ header {
 
 /* ... (Rest of your existing styles) */
 
-/* Mobile Styles */
+/* Responsive Table Styles */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.data-table th, .data-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Hide table headers on small screens */
 @media (max-width: 768px) {
+    .data-table th {
+        display: none;
+    }
+
+    .data-table td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: left;
+    }
+
+    /* Optional: Add some styling to each table row on small screens */
+    .data-table tr {
+        margin-bottom: 10px;
+        background-color: #f9f9f9; /* Light gray background color for rows */
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 8px;
+    }
+
     .menu {
         flex-direction: column;
         align-items: center;
