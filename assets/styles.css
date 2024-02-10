@@ -129,3 +129,34 @@ section {
         margin-bottom: 10px;
     }
 }
+
+/* Mobile Styles */
+@media only screen and (max-width: 600px) {
+    #dashboard.mobile-view {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .project-item {
+        width: 80%;
+        margin: 10px;
+        padding: 15px;
+        background-color: #333; /* Dark background color for tiles on mobile */
+        color: #ADD8E6; /* Light Blue text color */
+        border-radius: 10px;
+    }
+}
+
+/* Desktop Styles */
+@media only screen and (min-width: 601px) {
+    #dashboard.desktop-view {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .project-item {
+        display: none;
+    }
+}
