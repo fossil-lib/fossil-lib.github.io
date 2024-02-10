@@ -5,7 +5,7 @@ async function fetchData() {
     try {
         const response = await fetch('api/fossil/wrapdb-fossil.json');
         const data = await response.json();
-        displaySubprojects(data.subprojects);
+        displayProjects(data.subprojects);
     } catch (error) {
         console.error('Error fetching JSON:', error);
     }
