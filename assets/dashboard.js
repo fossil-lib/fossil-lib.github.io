@@ -1,8 +1,9 @@
 // dashboard.js
 
-async function fetchData(url) {
+// Function to fetch JSON data
+async function fetchData(jsonFile) {
     try {
-        const response = await fetch(url);
+        const response = await fetch(jsonFile);
         const data = await response.json();
         displayProjects(data.subprojects);
     } catch (error) {
@@ -10,50 +11,65 @@ async function fetchData(url) {
     }
 }
 
-function displayProjects(projects) {
+// Display projects on page load
+fetchData('fossil-wrapdb.json');
+
+// Function to display projects
+function displayProjects(subprojects) {
     const projectsElement = document.getElementById('projects');
     projectsElement.innerHTML = '';
 
-    projects.forEach(project => {
-        const card = document.createElement('div');
-        card.innerHTML = `
-            <h2>${encodeHTML(project.name)}</h2>
-            <p>${encodeHTML(project.short_description)}</p>
-            <p>${encodeHTML(project.long_description)}</p>
-            <p>License: ${encodeHTML(project.license)}</p>
-            <p>Author: ${encodeHTML(project.author)}</p>
-            <p>Minimum Meson Version: ${encodeHTML(project.min_meson_version)}</p>
-            <p>Repo Link: <a href="${encodeHTML(project.repo_link)}" target="_blank">${encodeHTML(project.repo_link)}</a></p>
-            <p>Wiki Link: <a href="${encodeHTML(project.wiki_link)}" target="_blank">${encodeHTML(project.wiki_link)}</a></p>
-            <p>Wrap Link: <a href="${encodeHTML(project.wrap_link)}" target="_blank">${encodeHTML(project.wrap_link)}</a></p>
-            <h3>Releases:</h3>
-            <ul>
-                ${project.releases.map(release => `
-                    <li>
-                        Version: ${encodeHTML(release.version)}
-                        Date: ${encodeHTML(release.date)}
-                        Notes: ${encodeHTML(release.notes)}
-                    </li>
-                `).join('')}
-            </ul>
+    // Create a table
+    const table = document.createElement('table');
+    table.innerHTML = `
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>License</th>
+                <th>Author</th>
+                <th>Minimum Meson Version</th>
+                <th>Repository Link</th>
+                <th>Wiki Link</th>
+                <th>Wrap Link</th>
+                <th>Releases</th>
+            </tr>
+        </thead>
+        <tbody id="projectsBody"></tbody>
+    `;
+    projectsElement.appendChild(table);
+
+    const projectsBodyElement = document.getElementById('projectsBody');
+
+    subprojects.forEach(subproject => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${encodeHTML(subproject.name)}</td>
+            <td>${encodeHTML(subproject.short_description)}</td>
+            <td>${encodeHTML(subproject.license)}</td>
+            <td>${encodeHTML(subproject.author)}</td>
+            <td>${encodeHTML(subproject.min_meson_version)}</td>
+            <td><a href="${encodeHTML(subproject.repo_link)}" target="_blank">${encodeHTML(subproject.repo_link)}</a></td>
+            <td><a href="${encodeHTML(subproject.wiki_link)}" target="_blank">${encodeHTML(subproject.wiki_link)}</a></td>
+            <td><a href="${encodeHTML(subproject.wrap_link)}" target="_blank">${encodeHTML(subproject.wrap_link)}</a></td>
+            <td>${generateReleasesHTML(subproject.releases)}</td>
         `;
-        projectsElement.appendChild(card);
+        projectsBodyElement.appendChild(row);
     });
 }
 
-function encodeHTML(text) {
-    return document.createElement('div').appendChild(document.createTextNode(text)).parentNode.innerHTML;
+// Function to generate HTML for releases
+function generateReleasesHTML(releases) {
+    return releases.map(release => `
+        <div>
+            <strong>Version:</strong> ${encodeHTML(release.version)}<br>
+            <strong>Date:</strong> ${encodeHTML(release.date)}<br>
+            <strong>Notes:</strong> ${encodeHTML(release.notes)}
+        </div>
+    `).join('');
 }
 
-function filterList() {
-    const searchInput = document.getElementById('searchInput');
-    const filter = searchInput.value.toLowerCase();
-
-    const filteredProjects = projects.filter(project =>
-        Object.values(project).some(value =>
-            typeof value === 'string' && value.toLowerCase().includes(filter)
-        )
-    );
-
-    displayProjects(filteredProjects);
+// Function to encode HTML entities
+function encodeHTML(text) {
+    return document.createElement('div').appendChild(document.createTextNode(text)).parentNode.innerHTML;
 }
