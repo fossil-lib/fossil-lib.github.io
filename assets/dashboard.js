@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const dashboardElement = document.getElementById('dashboard');
+    const dashboardElement = document.getElementById('../dashboard');
     const searchInput = document.getElementById('searchInput');
 
     // Fetch data from JSON file
