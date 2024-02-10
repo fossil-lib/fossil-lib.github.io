@@ -14,37 +14,37 @@ async function fetchData() {
 // Display subprojects on page load
 fetchData();
 
-// Function to display subprojects
-function displaySubprojects(subprojects) {
+// Function to display projects
+function displayProjects(projects) {
     const dashboardElement = document.getElementById('dashboard');
     dashboardElement.innerHTML = '';
 
-    subprojects.forEach(subproject => {
-        const subprojectItem = document.createElement('div');
-        subprojectItem.className = 'subproject-item';
-        subprojectItem.innerHTML = `
-            <p><strong>${encodeHTML(subproject.name)}</strong></p>
-            <p>${encodeHTML(subproject.short_description)}</p>
-            <p>${encodeHTML(subproject.long_description)}</p>
-            <p>License: ${encodeHTML(subproject.license)}</p>
-            <p>Author: ${encodeHTML(subproject.author)}</p>
-            <p>Min Meson Version: ${encodeHTML(subproject.min_meson_version)}</p>
-            <p><a href="${encodeHTML(subproject.repo_link)}" target="_blank">Repository Link</a></p>
-            <p><a href="${encodeHTML(subproject.wiki_link)}" target="_blank">Wiki Link</a></p>
-            <p><a href="${encodeHTML(subproject.wrap_link)}" target="_blank" download="${encodeHTML(subproject.wrap_link)}.wrap">Wrap Link</a></p>
-            <p>Releases: ${encodeHTML(displayReleases(subproject.releases))}</p>
+    const isMobileView = window.innerWidth <= 600;
+
+    projects.forEach(project => {
+        const projectItem = document.createElement('div');
+        projectItem.className = 'project-item';
+        const description = isMobileView ? project.long_description : project.short_description;
+
+        projectItem.innerHTML = `
+            <p><strong>${encodeHTML(project.name)}</strong></p>
+            <p>${encodeHTML(description)}</p>
+            <p><a href="${encodeHTML(project.repo_link)}" target="_blank">${encodeHTML(project.repo_link)}</a></p>
+            <p>License: ${encodeHTML(project.license)}</p>
+            <p>Min Meson Version: ${encodeHTML(project.min_meson_version)}</p>
+            <p>Wiki Link: <a href="${encodeHTML(project.wiki_link)}" target="_blank">${encodeHTML(project.wiki_link)}</a></p>
+            <p>Wrap Link: <a href="${encodeHTML(project.wrap_link)}" target="_blank"  download="${encodeHTML(subproject.wrap_link)}.wrap">${encodeHTML(project.wrap_link)}</a></p>
+            <p>Releases: ${encodeHTML(displayReleases(project.releases))}</p>
         `;
-        dashboardElement.appendChild(subprojectItem);
+        dashboardElement.appendChild(projectItem);
     });
 }
 
 // Function to display releases
 function displayReleases(releases) {
-    return releases.map(release => `
-        Version: ${encodeHTML(release.version)}, 
-        Date: ${encodeHTML(release.date)}, 
-        Notes: ${encodeHTML(release.notes)}
-    `).join('<br>');
+    return releases.map(release => {
+        return `<div>Version: ${encodeHTML(release.version)}, Date: ${encodeHTML(release.date)}, Notes: ${encodeHTML(release.notes)}</div>`;
+    }).join('');
 }
 
 // Function to encode HTML entities
