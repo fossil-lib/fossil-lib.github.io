@@ -2,15 +2,15 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
-    color: #333;
+    background-color: darkgray; /* Changed background color to dark gray */
+    color: #ffffff; /* Changed default text color to white */
 }
 
 .header {
     text-align: center;
     padding: 20px;
     background-color: #3498db;
-    color: #ffffff;
+    color: #ffa500; /* Changed h1 color to orange */
     font-size: 24px;
     font-weight: bold;
 }
