@@ -11,6 +11,13 @@ header {
     padding: 20px;
     background-color: #333;
     color: #ffa500; /* Orange h1 text color */
+    display: flex; /* Add flex container to header */
+    justify-content: flex-start; /* Move items to the start of the flex container */
+    align-items: center; /* Center items vertically in the flex container */
+}
+
+.header img {
+    margin-right: 10px; /* Add margin to the right of the logo for spacing */
 }
 
 .menu {
