@@ -1,0 +1,21 @@
+{
+  "wrapdb": [
+    {
+      "language": "c",
+      "file": "api/fossil/fossil-subprojects-c.json"
+    },
+    {
+      "language": "cpp",
+      "file": "api/fossil/fossil-subprojects-cpp.json"
+    },
+    {
+      "language": "objc",
+      "file": "api/fossil/fossil-subprojects-objc.json"
+    },
+    {
+      "language": "rust",
+      "file": "api/fossil/fossil-subprojects-rust.json"
+    }
+    // Add more languages as needed
+  ]
+}
