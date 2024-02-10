@@ -1,54 +1,62 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const dashboardElement = document.getElementById('../dashboard');
-    const searchInput = document.getElementById('searchInput');
-
-    // Fetch data from JSON file
-    fetch('../wrapdb-fossil.json')
+    // Fetch the JSON data
+    fetch('wrapdb-fossil.json')
         .then(response => response.json())
         .then(data => {
-            displaySubprojects(data.subprojects);
-
-            // Event listener for search input
-            searchInput.addEventListener('input', function () {
-                const searchTerm = searchInput.value.toLowerCase();
-                const filteredSubprojects = data.subprojects.filter(subproject =>
-                    subproject.name.toLowerCase().includes(searchTerm)
-                );
-
-                displaySubprojects(filteredSubprojects);
-            });
+            // Call the function to populate the table view
+            populateTableView(data.subprojects);
         })
         .catch(error => console.error('Error fetching data:', error));
-
-    function displaySubprojects(subprojects) {
-        // Clear previous content
-        dashboardElement.innerHTML = '';
-
-        subprojects.forEach(subproject => {
-            const tile = document.createElement('div');
-            tile.className = 'tile';
-
-            const tileHeader = document.createElement('div');
-            tileHeader.className = 'tile-header';
-            tileHeader.innerHTML = `<h2>${subproject.name}</h2>`;
-
-            const tileBody = document.createElement('div');
-            tileBody.className = 'tile-body';
-            tileBody.innerHTML = `<p>${subproject.short_description}</p>`;
-
-            const tileLinks = document.createElement('div');
-            tileLinks.className = 'tile-links';
-            tileLinks.innerHTML = `
-                <a href="${subproject.repo_link}" class="link-button" target="_blank">Repository</a>
-                <a href="${subproject.wiki_link}" class="link-button" target="_blank">Wiki</a>
-                <a href="${subproject.wrap_link}" class="link-button" target="_blank">Documentation</a>
-            `;
-
-            tile.appendChild(tileHeader);
-            tile.appendChild(tileBody);
-            tile.appendChild(tileLinks);
-
-            dashboardElement.appendChild(tile);
-        });
-    }
 });
+
+function populateTableView(subprojects) {
+    // Get the dashboard container
+    const dashboardContainer = document.getElementById('dashboard');
+
+    // Create a table element
+    const table = document.createElement('table');
+
+    // Create table header
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    const headers = ['Name', 'Short Description', 'License', 'Author', 'Min Meson Version', 'Release Date'];
+    
+    headers.forEach(headerText => {
+        const th = document.createElement('th');
+        th.appendChild(document.createTextNode(headerText));
+        headerRow.appendChild(th);
+    });
+
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    // Create table body
+    const tbody = document.createElement('tbody');
+
+    // Iterate through subprojects and populate table rows
+    subprojects.forEach(subproject => {
+        const row = document.createElement('tr');
+        
+        const columns = [
+            subproject.name,
+            subproject.short_description,
+            subproject.license,
+            subproject.author,
+            subproject.min_meson_version,
+            subproject.releases[0].date
+        ];
+
+        columns.forEach(columnText => {
+            const td = document.createElement('td');
+            td.appendChild(document.createTextNode(columnText));
+            row.appendChild(td);
+        });
+
+        tbody.appendChild(row);
+    });
+
+    table.appendChild(tbody);
+
+    // Append the table to the dashboard container
+    dashboardContainer.appendChild(table);
+}
