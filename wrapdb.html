@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fossil WrapDB</title>
-    <link rel="stylesheet" href="assets/styles.css"> <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="assets/styles.css">
     <link rel="icon" type="image/png" href="assets/logo.png">
 </head>
 <body>
@@ -22,21 +22,8 @@
     <label for="searchInput">Search:</label>
     <input type="search" id="searchInput" placeholder="Enter search terms..." oninput="filterList()">
 
-    <div id="tileContainer" class="tile-container"></div>
+    <div id="dashboard"></div>
 
-    <table id="tableView">
-        <thead>
-            <tr>
-                <th>Dependency</th>
-                <th>Description</th>
-                <th>GitHub URL</th>
-                <th>License</th>
-                <th>Languages</th>
-            </tr>
-        </thead>
-        <tbody id="dashboard"></tbody>
-    </table>
-
-    <script src="assets/logic.js" defer></script>
+    <script src="assets/logic.js"></script>
 </body>
 </html>
