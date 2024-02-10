@@ -1,3 +1,5 @@
+// dashboard.js
+
 // Function to fetch JSON data
 async function fetchData() {
     try {
@@ -15,69 +17,54 @@ fetchData();
 // Function to display projects
 function displayProjects(projects) {
     const dashboardElement = document.getElementById('dashboard');
-    const searchInput = document.getElementById('searchInput');
+    dashboardElement.innerHTML = '';
 
-    // Function to create a table row
-    function createTableRow(project) {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${encodeHTML(project.project)}</td>
-            <td>${encodeHTML(project.description)}</td>
-            <td><a href="${encodeHTML(project.url)}" target="_blank">${encodeHTML(project.url)}</a></td>
-            <td>${encodeHTML(project.license)}</td>
-            <td>${encodeHTML(project.languages.join(', '))}</td>
-        `;
-        dashboardElement.appendChild(row);
-    }
-
-    // Function to create a tile
-    function createTile(project) {
-        const tile = document.createElement('div');
-        tile.className = 'project-tile';
-        tile.innerHTML = `
-            <h3>${encodeHTML(project.project)}</h3>
+    projects.forEach(project => {
+        const projectItem = document.createElement('div');
+        projectItem.className = 'project-item';
+        projectItem.innerHTML = `
+            <p><strong>${encodeHTML(project.project)}</strong></p>
             <p>${encodeHTML(project.description)}</p>
-            <p><strong>GitHub URL:</strong> <a href="${encodeHTML(project.url)}" target="_blank">${encodeHTML(project.url)}</a></p>
-            <p><strong>License:</strong> ${encodeHTML(project.license)}</p>
-            <p><strong>Languages:</strong> ${encodeHTML(project.languages.join(', '))}</p>
+            <p><a href="${encodeHTML(project.url)}" target="_blank">${encodeHTML(project.url)}</a></p>
+            <p>License: ${encodeHTML(project.license)}</p>
+            <p>Languages: ${encodeHTML(project.languages.join(', '))}</p>
         `;
-        dashboardElement.appendChild(tile);
-    }
-
-    // Function to encode HTML entities
-    function encodeHTML(text) {
-        return document.createElement('div').appendChild(document.createTextNode(text)).parentNode.innerHTML;
-    }
-
-    // Function to filter the list
-    function filterList() {
-        const filter = searchInput.value.toLowerCase();
-        const filteredProjects = projects.filter(project =>
-            Object.values(project).some(value =>
-                typeof value === 'string' && value.toLowerCase().includes(filter)
-            )
-        );
-
-        // Clear existing content
-        dashboardElement.innerHTML = '';
-
-        // Choose between table and tile view based on screen size
-        if (window.innerWidth <= 600) {
-            filteredProjects.forEach(createTile);
-        } else {
-            // Create table header
-            const tableHeader = document.createElement('tr');
-            tableHeader.innerHTML = '<th>Dependency</th><th>Description</th><th>GitHub URL</th><th>License</th><th>Languages</th>';
-            dashboardElement.appendChild(tableHeader);
-
-            // Create table rows
-            filteredProjects.forEach(createTableRow);
-        }
-    }
-
-    // Event listener for screen size changes
-    window.addEventListener('resize', filterList);
-
-    // Initial display based on screen size
-    filterList();
+        dashboardElement.appendChild(projectItem);
+    });
 }
+
+// Function to encode HTML entities
+function encodeHTML(text) {
+    return document.createElement('div').appendChild(document.createTextNode(text)).parentNode.innerHTML;
+}
+
+// Function to filter the list
+function filterList() {
+    const searchInput = document.getElementById('searchInput');
+    const filter = searchInput.value.toLowerCase();
+
+    const projectItems = document.querySelectorAll('.project-item');
+
+    projectItems.forEach(item => {
+        const itemText = item.textContent.toLowerCase();
+        item.style.display = itemText.includes(filter) ? '' : 'none';
+    });
+}
+
+// Check screen width and apply appropriate view
+function applyResponsiveView() {
+    const screenWidth = window.innerWidth;
+    const dashboardElement = document.getElementById('dashboard');
+
+    if (screenWidth <= 600) {
+        dashboardElement.classList.add('mobile-view');
+        dashboardElement.classList.remove('desktop-view');
+    } else {
+        dashboardElement.classList.add('desktop-view');
+        dashboardElement.classList.remove('mobile-view');
+    }
+}
+
+// Apply responsive view on page load and resize
+applyResponsiveView();
+window.addEventListener('resize', applyResponsiveView);
