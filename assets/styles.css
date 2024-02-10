@@ -3,6 +3,16 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f5f5f5;
+    color: #333;
+}
+
+.header {
+    text-align: center;
+    padding: 20px;
+    background-color: #3498db;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .dashboard {
@@ -19,6 +29,11 @@ body {
     overflow: hidden;
     margin: 10px;
     width: 300px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.tile:hover {
+    transform: scale(1.05);
 }
 
 .tile-header {
@@ -31,6 +46,7 @@ body {
 .tile-body {
     padding: 15px;
     text-align: justify;
+    line-height: 1.4;
 }
 
 .tile-links {
@@ -46,4 +62,33 @@ body {
     text-decoration: none;
     border-radius: 5px;
     text-align: center;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.link-button:hover {
+    background-color: #297dbb;
+}
+
+/* Responsive Styles */
+
+/* Tablets */
+@media (max-width: 768px) {
+    .dashboard {
+        padding: 10px;
+    }
+
+    .tile {
+        width: calc(50% - 20px);
+    }
+}
+
+/* Mobile Phones */
+@media (max-width: 480px) {
+    .dashboard {
+        padding: 10px;
+    }
+
+    .tile {
+        width: calc(100% - 20px);
+    }
 }
