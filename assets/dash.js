@@ -20,7 +20,7 @@ function populateTable(subprojects) {
 }
 
 // Load the JSON data
-fetch('wrapdb-fossil.json')
+fetch('assets/wrapdb-fossil.json')
     .then(response => response.json())
     .then(data => {
         // Access the subprojects array from the JSON data
