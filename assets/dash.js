@@ -32,3 +32,27 @@ fetch('assets/wrapdb-fossil.json')
     .catch(error => {
         console.error('Error fetching data:', error);
     });
+
+
+// Fetch the JSON file
+fetch('wrapdb-fossil.json')
+    .then(response => response.json())
+    .then(data => {
+        // Create a dashboard from the JSON data
+        const dashboardElement = document.getElementById('dashboard');
+        data.subprojects.forEach(project => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${project.name}</td>
+                <td>${project.short_description}</td>
+                <td><a href="${project.repo_link}" target="_blank">${project.repo_link}</a></td>
+                <td><a href="${project.wrap_link}" target="_blank">${project.wrap_link}</a></td>
+                <td><a href="${project.wiki_link}" target="_blank">${project.wiki_link}</a></td>
+                <td>${project.author}</td>
+                <td>${project.license}</td>
+                <td>${project.languages.join(', ')}</td>
+            `;
+            dashboardElement.appendChild(row);
+        });
+    })
+    .catch(error => console.error('Error fetching JSON:', error));
