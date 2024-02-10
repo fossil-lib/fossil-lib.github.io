@@ -29,76 +29,45 @@
     </div>
     <div class="dashboard" id="dashboard"></div>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-    // Fetch data from JSON file
-    fetch('assets/wrapdb-fossil.json')
-        .then(response => response.json())
-        .then(data => {
-            // Process data and build dashboard
-            buildDashboard(data.subprojects);
-        })
-        .catch(error => console.error('Error fetching data:', error));
+    // Load the JSON data
+fetch('assets/wrapdb-fossil.json')
+  .then(response => response.json())
+  .then(data => {
+    // Access the subprojects array from the JSON data
+    const subprojects = data.subprojects;
 
-    // Function to build the dashboard
-    function buildDashboard(subprojects) {
-        const dashboardElement = document.getElementById('dashboard');
+    // Get the dashboard element
+    const dashboard = document.getElementById('dashboard');
 
-        // Loop through each subproject and create a tile
-        subprojects.forEach(subproject => {
-            const tile = createTile(subproject);
-            dashboardElement.appendChild(tile);
-        });
-    }
+    // Create a table element
+    const table = document.createElement('table');
+    table.classList.add('data-table');
 
-    // Function to create a tile for a subproject
-    function createTile(subproject) {
-        const tile = document.createElement('div');
-        tile.classList.add('tile');
+    // Create table header row
+    const headerRow = table.insertRow();
+    const headers = ['Name', 'Short Description', 'License', 'Author', 'Release Date'];
+    headers.forEach(headerText => {
+      const header = document.createElement('th');
+      header.textContent = headerText;
+      headerRow.appendChild(header);
+    });
 
-        const tileHeader = document.createElement('div');
-        tileHeader.classList.add('tile-header');
-        tileHeader.textContent = subproject.name;
-        tile.appendChild(tileHeader);
+    // Create table rows for each subproject
+    subprojects.forEach(subproject => {
+      const row = table.insertRow();
+      const rowData = [subproject.name, subproject.short_description, subproject.license, subproject.author, subproject.releases[0].date];
+      rowData.forEach(cellData => {
+        const cell = row.insertCell();
+        cell.textContent = cellData;
+      });
+    });
 
-        const tileBody = document.createElement('div');
-        tileBody.classList.add('tile-body');
-
-        const shortDescription = document.createElement('p');
-        shortDescription.textContent = subproject.short_description;
-        tileBody.appendChild(shortDescription);
-
-        const longDescription = document.createElement('p');
-        longDescription.textContent = subproject.long_description;
-        tileBody.appendChild(longDescription);
-
-        tile.appendChild(tileBody);
-
-        const tileLinks = document.createElement('div');
-        tileLinks.classList.add('tile-links');
-
-        const repoLink = createLinkButton('Repository', subproject.repo_link);
-        const wikiLink = createLinkButton('Wiki', subproject.wiki_link);
-        const wrapLink = createLinkButton('Wrap', subproject.wrap_link);
-
-        tileLinks.appendChild(repoLink);
-        tileLinks.appendChild(wikiLink);
-        tileLinks.appendChild(wrapLink);
-
-        tile.appendChild(tileLinks);
-
-        return tile;
-    }
-
-    // Function to create a link button
-    function createLinkButton(text, link) {
-        const linkButton = document.createElement('a');
-        linkButton.classList.add('link-button');
-        linkButton.href = link;
-        linkButton.target = '_blank';
-        linkButton.textContent = text;
-        return linkButton;
-    }
-});
+    // Append the table to the dashboard
+    dashboard.appendChild(table);
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
 </script>
 </body>
 
