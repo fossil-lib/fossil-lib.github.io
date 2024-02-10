@@ -1,8 +1,15 @@
+// dashboard.js
+
 // Function to fetch JSON data
 async function fetchData() {
     try {
-        const response = await fetch('wrapdb-fossil.json');
+        const response = await fetch('api/fossil/wrapdb-fossil.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
         const data = await response.json();
+        console.log('Fetched data:', data);
         displayProjects(data.subprojects);
     } catch (error) {
         console.error('Error fetching JSON:', error);
@@ -21,9 +28,10 @@ function displayProjects(projects) {
 
     projects.forEach(project => {
         const projectItem = document.createElement('div');
-        projectItem.className = 'subproject-item'; // Updated class name
-
+        projectItem.className = 'project-item';
         const description = isMobileView ? project.long_description : project.short_description;
+
+        console.log('Rendering project:', project);
 
         projectItem.innerHTML = `
             <p><strong>${encodeHTML(project.name)}</strong></p>
@@ -32,18 +40,10 @@ function displayProjects(projects) {
             <p>License: ${encodeHTML(project.license)}</p>
             <p>Min Meson Version: ${encodeHTML(project.min_meson_version)}</p>
             <p>Wiki Link: <a href="${encodeHTML(project.wiki_link)}" target="_blank">${encodeHTML(project.wiki_link)}</a></p>
-            <p>Wrap Link: <a href="${encodeHTML(project.wrap_link)}" target="_blank" download="${encodeHTML(project.wrap_link)}.wrap">${encodeHTML(project.wrap_link)}</a></p>
-            <p>Releases: ${encodeHTML(displayReleases(project.releases))}</p>
+            <p>Wrap Link: <a href="${encodeHTML(project.wrap_link)}" target="_blank"  download="${encodeHTML(subproject.wrap_link)}.wrap">${encodeHTML(project.wrap_link)}</a></p>
         `;
         dashboardElement.appendChild(projectItem);
     });
-}
-
-// Function to display releases
-function displayReleases(releases) {
-    return releases.map(release => {
-        return `<div>Version: ${encodeHTML(release.version)}, Date: ${encodeHTML(release.date)}, Notes: ${encodeHTML(release.notes)}</div>`;
-    }).join('');
 }
 
 // Function to encode HTML entities
