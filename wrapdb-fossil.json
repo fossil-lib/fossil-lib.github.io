@@ -10,13 +10,7 @@
       "repo_link": "https://github.com/fossil-lib/fscl-xtest-c",
       "wiki_link": "https://github.com/fossil-lib/fscl-xtest-c/wiki",
       "wrap_link": "https://fossil-lib.github.io/wrap/fscl-xtest-c",
-      "releases": [
-        {
-          "version": "1.0.0",
-          "date": "2024-03-01",
-          "notes": "Initial release"
-        }
-      ]
+      "languages": ["c"]
     },
     {
       "name": "Fossil XMock",
@@ -28,13 +22,7 @@
       "repo_link": "https://github.com/fossil-lib/fscl-xmock-c",
       "wiki_link": "https://github.com/fossil-lib/fscl-xmock-c/wiki",
       "wrap_link": "https://fossil-lib.github.io/wrap/fscl-xmock-c",
-      "releases": [
-        {
-          "version": "2.0.0",
-          "date": "2024-03-15",
-          "notes": "Major enhancements"
-        }
-      ]
+      "languages": ["c"]
     },
     {
       "name": "Fossil XCore",
@@ -46,13 +34,7 @@
       "repo_link": "https://github.com/fossil-lib/fscl-xcore-c",
       "wiki_link": "https://github.com/fossil-lib/fscl-xcore-c/wiki",
       "wrap_link": "https://fossil-lib.github.io/wrap/fscl-xcore-c",
-      "releases": [
-        {
-          "version": "1.0.0",
-          "date": "2024-03-01",
-          "notes": "Initial release"
-        }
-      ]
+      "languages": ["c"]
     },
     {
       "name": "Fossil XUtility",
@@ -64,13 +46,7 @@
       "repo_link": "https://github.com/fossil-lib/fscl-xutil-c",
       "wiki_link": "https://github.com/fossil-lib/fscl-xutil-c/wiki",
       "wrap_link": "https://fossil-lib.github.io/wrap/fscl-xutil-c",
-      "releases": [
-        {
-          "version": "1.0.0",
-          "date": "2024-03-01",
-          "notes": "Initial release"
-        }
-      ]
+      "languages": ["c"]
     },
     {
       "name": "Fossil XData Structures",
@@ -82,13 +58,7 @@
       "repo_link": "https://github.com/fossil-lib/fscl-xdata-c",
       "wiki_link": "https://github.com/fossil-lib/fscl-xdata-c/wiki",
       "wrap_link": "https://fossil-lib.github.io/wrap/fscl-xdata-c",
-      "releases": [
-        {
-          "version": "1.0.0",
-          "date": "2024-03-01",
-          "notes": "Initial release"
-        }
-      ]
+      "languages": ["c"]
     },
     {
       "name": "Fossil XScience",
@@ -100,13 +70,7 @@
       "repo_link": "https://github.com/fossil-lib/fscl-xscience-c",
       "wiki_link": "https://github.com/fossil-lib/fscl-xscience-c/wiki",
       "wrap_link": "https://fossil-lib.github.io/wrap/fscl-xscience-c",
-      "releases": [
-        {
-          "version": "1.0.0",
-          "date": "2024-03-01",
-          "notes": "Initial release"
-        }
-      ]
+      "languages": ["c"]
     },
     {
       "name": "Fossil XString",
@@ -118,13 +82,7 @@
       "repo_link": "https://github.com/fossil-lib/fscl-xstring-c",
       "wiki_link": "https://github.com/fossil-lib/fscl-xstring-c/wiki",
       "wrap_link": "https://fossil-lib.github.io/wrap/fscl-xstring-c",
-      "releases": [
-        {
-          "version": "1.0.0",
-          "date": "2024-03-01",
-          "notes": "Initial release"
-        }
-      ]
+      "languages": ["c"]
     },
     {
       "name": "Fossil XFish AI",
@@ -136,13 +94,7 @@
       "repo_link": "https://github.com/fossil-lib/fscl-xfish-c",
       "wiki_link": "https://github.com/fossil-lib/fscl-xfish-c/wiki",
       "wrap_link": "https://fossil-lib.github.io/wrap/fscl-xfish-c",
-      "releases": [
-        {
-          "version": "1.0.0",
-          "date": "2024-03-01",
-          "notes": "Initial release"
-        }
-      ]
+      "languages": ["c"]
     },
     {
       "name": "Fossil XCude 2D Graphics",
@@ -154,13 +106,7 @@
       "repo_link": "https://github.com/fossil-lib/fscl-xcude-c",
       "wiki_link": "https://github.com/fossil-lib/fscl-xcude-c/wiki",
       "wrap_link": "https://fossil-lib.github.io/wrap/fscl-xcude-c",
-      "releases": [
-        {
-          "version": "1.0.0",
-          "date": "2024-03-01",
-          "notes": "Initial release"
-        }
-      ]
+      "languages": ["c"]
     },
     {
       "name": "Fossil XPattern",
@@ -172,13 +118,7 @@
       "repo_link": "https://github.com/fossil-lib/fscl-xpattern-c",
       "wiki_link": "https://github.com/fossil-lib/fscl-xpattern-c/wiki",
       "wrap_link": "https://fossil-lib.github.io/wrap/fscl-xpattern-c",
-      "releases": [
-        {
-          "version": "1.0.0",
-          "date": "2024-03-01",
-          "notes": "Initial release"
-        }
-      ]
+      "languages": ["c"]
     }
   ]
 }
