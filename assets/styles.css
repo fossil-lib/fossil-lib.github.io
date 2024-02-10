@@ -1,9 +1,5 @@
 /* styles.css */
 
-.wrapper {
-    display: flex;
-}
-
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
@@ -95,6 +91,33 @@ section {
 @media only screen and (max-width: 600px) {
     body {
         font-size: 14px; /* Adjust font size for better readability on smaller screens */
+        margin: 10px; /* Add some margin for better spacing on small screens */
+    }
+
+    nav ul {
+        text-align: center;
+    }
+
+    nav li {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    header {
+        padding: 5px; /* Adjust header padding for smaller screens */
+    }
+
+    table {
+        font-size: 14px; /* Adjust table font size for better readability on small screens */
+    }
+
+    th, td {
+        padding: 8px; /* Adjust cell padding for better spacing on small screens */
+    }
+
+    nav a {
+        padding: 6px 10px; /* Adjust button padding for better spacing on small screens */
+        font-size: 14px; /* Adjust button font size for better readability on small screens */
     }
 
     nav ul {
