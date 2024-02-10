@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Fetch data from JSON file
-    fetch('assets/wrapdb-fossil.json')
+    fetch('wrapdb-fossil.json')
         .then(response => response.json())
         .then(data => {
             // Process data and build dashboard
