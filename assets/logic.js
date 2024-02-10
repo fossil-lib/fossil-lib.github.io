@@ -1,4 +1,4 @@
-// Fetch the JSON data
+// Function to fetch JSON data
 async function fetchData() {
     try {
         const response = await fetch('fscl-project.json');
@@ -15,9 +15,10 @@ fetchData();
 // Function to display projects
 function displayProjects(projects) {
     const dashboardElement = document.getElementById('dashboard');
-    dashboardElement.innerHTML = '';
+    const searchInput = document.getElementById('searchInput');
 
-    projects.forEach(project => {
+    // Function to create a table row
+    function createTableRow(project) {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${encodeHTML(project.project)}</td>
@@ -27,24 +28,56 @@ function displayProjects(projects) {
             <td>${encodeHTML(project.languages.join(', '))}</td>
         `;
         dashboardElement.appendChild(row);
-    });
-}
+    }
 
-// Function to encode HTML entities
-function encodeHTML(text) {
-    return document.createElement('div').appendChild(document.createTextNode(text)).parentNode.innerHTML;
-}
+    // Function to create a tile
+    function createTile(project) {
+        const tile = document.createElement('div');
+        tile.className = 'project-tile';
+        tile.innerHTML = `
+            <h3>${encodeHTML(project.project)}</h3>
+            <p>${encodeHTML(project.description)}</p>
+            <p><strong>GitHub URL:</strong> <a href="${encodeHTML(project.url)}" target="_blank">${encodeHTML(project.url)}</a></p>
+            <p><strong>License:</strong> ${encodeHTML(project.license)}</p>
+            <p><strong>Languages:</strong> ${encodeHTML(project.languages.join(', '))}</p>
+        `;
+        dashboardElement.appendChild(tile);
+    }
 
-// Function to filter the list
-function filterList() {
-    const searchInput = document.getElementById('searchInput');
-    const filter = searchInput.value.toLowerCase();
+    // Function to encode HTML entities
+    function encodeHTML(text) {
+        return document.createElement('div').appendChild(document.createTextNode(text)).parentNode.innerHTML;
+    }
 
-    const filteredProjects = projects.filter(project =>
-        Object.values(project).some(value =>
-            typeof value === 'string' && value.toLowerCase().includes(filter)
-        )
-    );
+    // Function to filter the list
+    function filterList() {
+        const filter = searchInput.value.toLowerCase();
+        const filteredProjects = projects.filter(project =>
+            Object.values(project).some(value =>
+                typeof value === 'string' && value.toLowerCase().includes(filter)
+            )
+        );
 
-    displayProjects(filteredProjects);
+        // Clear existing content
+        dashboardElement.innerHTML = '';
+
+        // Choose between table and tile view based on screen size
+        if (window.innerWidth <= 600) {
+            filteredProjects.forEach(createTile);
+        } else {
+            // Create table header
+            const tableHeader = document.createElement('tr');
+            tableHeader.innerHTML = '<th>Dependency</th><th>Description</th><th>GitHub URL</th><th>License</th><th>Languages</th>';
+            dashboardElement.appendChild(tableHeader);
+
+            // Create table rows
+            filteredProjects.forEach(createTableRow);
+        }
+    }
+
+    // Event listener for screen size changes
+    window.addEventListener('resize', filterList);
+
+    // Initial display based on screen size
+    filterList();
 }
