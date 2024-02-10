@@ -27,48 +27,21 @@
     <div class="search-container">
         <input type="text" id="searchInput" placeholder="Search by name...">
     </div>
-    <div class="dashboard" id="dashboard"></div>
-    <script>
-    // Load the JSON data
-fetch('assets/wrapdb-fossil.json')
-  .then(response => response.json())
-  .then(data => {
-    // Access the subprojects array from the JSON data
-    const subprojects = data.subprojects;
-
-    // Get the dashboard element
-    const dashboard = document.getElementById('dashboard');
-
-    // Create a table element
-    const table = document.createElement('table');
-    table.classList.add('data-table');
-
-    // Create table header row
-    const headerRow = table.insertRow();
-    const headers = ['Name', 'Short Description', 'License', 'Author', 'Release Date'];
-    headers.forEach(headerText => {
-      const header = document.createElement('th');
-      header.textContent = headerText;
-      headerRow.appendChild(header);
-    });
-
-    // Create table rows for each subproject
-    subprojects.forEach(subproject => {
-      const row = table.insertRow();
-      const rowData = [subproject.name, subproject.short_description, subproject.license, subproject.author, subproject.releases[0].date];
-      rowData.forEach(cellData => {
-        const cell = row.insertCell();
-        cell.textContent = cellData;
-      });
-    });
-
-    // Append the table to the dashboard
-    dashboard.appendChild(table);
-  })
-  .catch(error => {
-    console.error('Error fetching data:', error);
-  });
-</script>
+    <div class="dashboard" id="dashboard">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Short Description</th>
+                    <th>License</th>
+                    <th>Author</th>
+                    <th>Release Date</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+    <script src="assets/dashboard.js"></script>
 </body>
 
 </html>
