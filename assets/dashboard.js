@@ -1,5 +1,3 @@
-// dashboard.js
-
 // Function to fetch JSON data
 async function fetchData() {
     try {
@@ -23,7 +21,8 @@ function displayProjects(projects) {
 
     projects.forEach(project => {
         const projectItem = document.createElement('div');
-        projectItem.className = 'project-item';
+        projectItem.className = 'subproject-item'; // Updated class name
+
         const description = isMobileView ? project.long_description : project.short_description;
 
         projectItem.innerHTML = `
@@ -33,7 +32,7 @@ function displayProjects(projects) {
             <p>License: ${encodeHTML(project.license)}</p>
             <p>Min Meson Version: ${encodeHTML(project.min_meson_version)}</p>
             <p>Wiki Link: <a href="${encodeHTML(project.wiki_link)}" target="_blank">${encodeHTML(project.wiki_link)}</a></p>
-            <p>Wrap Link: <a href="${encodeHTML(project.wrap_link)}" target="_blank"  download="${encodeHTML(subproject.wrap_link)}.wrap">${encodeHTML(project.wrap_link)}</a></p>
+            <p>Wrap Link: <a href="${encodeHTML(project.wrap_link)}" target="_blank" download="${encodeHTML(project.wrap_link)}.wrap">${encodeHTML(project.wrap_link)}</a></p>
             <p>Releases: ${encodeHTML(displayReleases(project.releases))}</p>
         `;
         dashboardElement.appendChild(projectItem);
