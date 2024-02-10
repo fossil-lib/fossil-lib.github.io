@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.getElementById('searchInput');
 
     // Fetch data from JSON file
-    fetch('wrapdb-fossil.json')
+    fetch('../wrapdb-fossil.json')
         .then(response => response.json())
         .then(data => {
             displaySubprojects(data.subprojects);
