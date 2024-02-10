@@ -2,17 +2,56 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: darkgray; /* Changed background color to dark gray */
-    color: #ffffff; /* Changed default text color to white */
+    background-color: #2c3e50; /* Dark background color */
+    color: #ecf0f1; /* Light text color */
+}
+
+header {
+    background-color: #34495e; /* Dark background color */
+    padding: 10px 0;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-around;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin-right: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #3498db; /* Light blue for menu text */
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+nav ul li a:hover {
+    background-color: #2980b9; /* Darker blue on hover */
 }
 
 .header {
     text-align: center;
     padding: 20px;
-    background-color: #3498db;
-    color: #ffa500; /* Changed h1 color to orange */
-    font-size: 24px;
-    font-weight: bold;
+}
+
+/* Heading color updated to light blue */
+.header h1 {
+    color: #3498db;
+}
+
+.search-container {
+    text-align: center;
+    padding: 10px;
 }
 
 .dashboard {
@@ -22,8 +61,13 @@ body {
     padding: 20px;
 }
 
+/* Text color updated to light blue */
+.tile-body {
+    color: #3498db;
+}
+
 .tile {
-    background-color: #ffffff;
+    background-color: #34495e; /* Dark background color */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
@@ -37,8 +81,8 @@ body {
 }
 
 .tile-header {
-    background-color: #3498db;
-    color: #ffffff;
+    background-color: #2c3e50; /* Darker background color */
+    color: #ecf0f1; /* Light text color */
     padding: 10px;
     text-align: center;
 }
@@ -56,8 +100,8 @@ body {
 }
 
 .link-button {
-    background-color: #3498db;
-    color: #ffffff;
+    background-color: #3498db; /* Light blue button color */
+    color: #ecf0f1; /* Light text color */
     padding: 8px 15px;
     text-decoration: none;
     border-radius: 5px;
@@ -66,52 +110,5 @@ body {
 }
 
 .link-button:hover {
-    background-color: #297dbb;
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-}
-
-nav ul li {
-    margin-right: 20px;
-}
-
-nav ul li a {
-    text-decoration: none;
-    color: #ffffff;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease-in-out;
-}
-
-nav ul li a:hover {
-    background-color: #555;
-}
-
-/* Responsive Styles */
-
-/* Tablets */
-@media (max-width: 768px) {
-    .dashboard {
-        padding: 10px;
-    }
-
-    .tile {
-        width: calc(50% - 20px);
-    }
-}
-
-/* Mobile Phones */
-@media (max-width: 480px) {
-    .dashboard {
-        padding: 10px;
-    }
-
-    .tile {
-        width: calc(100% - 20px);
-    }
+    background-color: #2980b9; /* Darker blue on hover */
 }
