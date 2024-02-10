@@ -1,62 +1,44 @@
-// dashboard.js
+// Fetch and process each subproject JSON file
+async function processSubprojects() {
+  const languages = ['c', 'cpp', 'objc', 'rust']; // Add more languages as needed
 
-// Function to fetch subproject data
-async function fetchSubprojectData(language, file) {
+  // Array to store all subprojects
+  let allSubprojects = [];
+
+  // Loop through each language
+  for (const language of languages) {
+    const subprojectFileName = `fossil-subprojects-${language}.json`;
+
+    // Fetch subproject JSON file for the current language
     try {
-        const response = await fetch(file);
-        const data = await response.json();
-        displaySubprojects(language, data.subprojects);
+      const response = await fetch(`api/fossil/${subprojectFileName}`);
+      const subprojectData = await response.json();
+
+      // Combine all subprojects into one array
+      allSubprojects = allSubprojects.concat(subprojectData.subprojects);
+
+      // Process subprojectData as needed (e.g., display in a table)
+      displaySubprojects(language, subprojectData.subprojects);
     } catch (error) {
-        console.error(`Error fetching ${language} subproject data:`, error);
+      console.error(`Error fetching ${language} subproject data:`, error);
     }
+  }
+
+  // Function to filter and display subprojects based on search criteria
+  function filterAndDisplaySubprojects(searchCriteria) {
+    const filteredSubprojects = allSubprojects.filter(subproject =>
+      Object.values(subproject).some(value =>
+        typeof value === 'string' && value.toLowerCase().includes(searchCriteria.toLowerCase())
+      )
+    );
+
+    // Display the filtered subprojects
+    displaySubprojects('filtered', filteredSubprojects);
+  }
+
+  // Call the function to start the process with an example search
+  filterAndDisplaySubprojects('c OR Fossil XTest');
 }
 
-// Function to display subprojects
-function displaySubprojects(language, subprojects) {
-    const dashboardElement = document.getElementById('dashboard');
-    subprojects.forEach(subproject => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${encodeHTML(subproject.name)}</td>
-            <td>${encodeHTML(subproject.short_description)}</td>
-            <td><a href="${encodeHTML(subproject.repo_link)}" target="_blank">${encodeHTML(subproject.repo_link)}</a></td>
-            <td>${encodeHTML(subproject.license)}</td>
-            <td>${encodeHTML(subproject.languages.join(', '))}</td>
-            <td>${encodeHTML(subproject.min_meson_version)}</td>
-            <td>${encodeHTML(subproject.author)}</td>
-            <td><a href="${encodeHTML(subproject.wiki_link)}" target="_blank">Wiki</a></td>
-            <td><a href="${encodeHTML(subproject.wrap_link)}" target="_blank">Wrap</a></td>
-            <td>${generateReleases(subproject.releases)}</td>
-        `;
-        dashboardElement.appendChild(row);
-    });
-}
-
-// Function to generate releases HTML
-function generateReleases(releases) {
-    if (!releases || releases.length === 0) {
-        return 'No releases';
-    }
-
-    return releases.map(release => `
-        <p>Version: ${encodeHTML(release.version)}</p>
-        <p>Date: ${encodeHTML(release.date)}</p>
-        <p>Notes: ${encodeHTML(release.notes)}</p>
-    `).join('<hr>');
-}
-
-// Function to encode HTML entities
-function encodeHTML(text) {
-    return document.createElement('div').appendChild(document.createTextNode(text)).parentNode.innerHTML;
-}
-
-// Fetch subproject data from fossil-wrapdb.json
-fetch('fossil-wrapdb.json')
-    .then(response => response.json())
-    .then(data => {
-        // Loop through wrapdb array and fetch subproject data
-        data.wrapdb.forEach(entry => {
-            fetchSubprojectData(entry.language, entry.file);
-        });
-    })
-    .catch(error => console.error('Error fetching fossil-wrapdb.json:', error));
+// Call the function to start the process
+processSubprojects();
