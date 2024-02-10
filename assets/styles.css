@@ -1,19 +1,98 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Courier New', Courier, monospace;
     margin: 0;
     padding: 0;
-    background-color: #000; /* Black background color */
-    color: #ecf0f1; /* Light text color */
+    background-color: #1a1a1a; /* Dark gray background */
+    color: #add8e6; /* Light blue text */
 }
 
 header {
-    background-color: #333; /* Dark background color */
-    padding: 10px 0;
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: #ffa500; /* Orange h1 text color */
 }
 
 .menu {
     display: flex;
     justify-content: space-around;
+    background-color: #333;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    display: inline;
+    margin: 10px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #add8e6;
+}
+
+.menu a:hover {
+    border-bottom: 2px solid #add8e6;
+}
+
+.search-container {
+    text-align: center;
+    padding: 15px;
+}
+
+.dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.tile {
+    background-color: #333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 10px;
+    width: 300px;
+}
+
+.tile-header {
+    background-color: #555;
+    color: #ffa500; /* Orange tile header text color */
+    padding: 10px;
+    text-align: center;
+}
+
+.tile-body {
+    padding: 15px;
+    text-align: justify;
+}
+
+.tile-body p {
+    margin-bottom: 10px;
+}
+
+.tile-body h2 {
+    text-align: center;
+}
+
+.tile-links {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 15px;
+}
+
+.link-button {
+    background-color: #555;
+    color: #ffa500; /* Orange link button text color */
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
 }
 
 nav ul {
