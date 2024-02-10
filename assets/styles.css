@@ -1,181 +1,49 @@
-/* styles.css */
-
-#dashboard {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-}
-
-#dashboard.mobile-view {
-    display: block;
-}
-
-/* Add styles for the search container */
-.search-container {
-    margin-bottom: 20px;
-}
-
-.search-container label {
-    margin-right: 10px;
-}
-
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: #1c1c1c; /* Dark background color */
-    color: #ADD8E6; /* Light Blue text color */
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
 }
 
-header {
-    background-color: #333; /* Dark background color for the header */
+.dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.tile {
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 10px;
+    width: 300px;
+}
+
+.tile-header {
+    background-color: #3498db;
+    color: #ffffff;
     padding: 10px;
     text-align: center;
 }
 
-nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+.tile-body {
+    padding: 15px;
+    text-align: justify;
+}
+
+.tile-links {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 15px;
+}
+
+.link-button {
+    background-color: #3498db;
+    color: #ffffff;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 5px;
     text-align: center;
-}
-
-nav ul li {
-    display: inline-block;
-    margin-right: 20px;
-}
-
-nav a {
-    text-decoration: none;
-    color: #ADD8E6; /* Light Blue text color for navigation links */
-    font-weight: bold;
-}
-
-section {
-    margin-top: 20px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-}
-
-th {
-    background-color: #333; /* Dark background color for table header */
-    color: white;
-}
-
-h1 {
-    color: white;
-    margin: 0;
-}
-
-nav ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    text-align: center; /* Center the menu items on mobile */
-}
-
-nav li {
-    display: inline;
-    margin-right: 10px;
-}
-
-nav a {
-    text-decoration: none;
-    color: #fff; /* White */
-    padding: 8px 12px;
-    border-radius: 4px;
-    background-color: #555; /* Gray */
-    display: inline-block; /* Ensure the links are block elements on mobile */
-    margin-bottom: 5px; /* Add some spacing between buttons on mobile */
-}
-
-nav a:hover {
-    background-color: #777; /* Darker Gray */
-}
-
-section {
-    margin-top: 20px;
-}
-
-/* Mobile Styles */
-@media only screen and (max-width: 600px) {
-    body {
-        font-size: 14px; /* Adjust font size for better readability on smaller screens */
-        margin: 10px; /* Add some margin for better spacing on small screens */
-    }
-
-    nav ul {
-        text-align: center;
-    }
-
-    nav li {
-        display: block;
-        margin-bottom: 10px;
-    }
-
-    header {
-        padding: 5px; /* Adjust header padding for smaller screens */
-    }
-
-    table {
-        font-size: 14px; /* Adjust table font size for better readability on small screens */
-    }
-
-    th, td {
-        padding: 8px; /* Adjust cell padding for better spacing on small screens */
-    }
-
-    nav a {
-        padding: 6px 10px; /* Adjust button padding for better spacing on small screens */
-        font-size: 14px; /* Adjust button font size for better readability on small screens */
-    }
-
-    nav ul {
-        text-align: center;
-    }
-
-    nav li {
-        display: block;
-        margin-bottom: 10px;
-    }
-}
-
-/* Mobile Styles */
-@media only screen and (max-width: 600px) {
-    #dashboard.mobile-view {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .project-item {
-        width: 80%;
-        margin: 10px;
-        padding: 15px;
-        background-color: #333; /* Dark background color for tiles on mobile */
-        color: #ADD8E6; /* Light Blue text color */
-        border-radius: 10px;
-    }
-}
-
-/* Desktop Styles */
-@media only screen and (min-width: 601px) {
-    #dashboard.desktop-view {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-
-    .project-item {
-        display: none;
-    }
 }
