@@ -1,83 +1,54 @@
-// dashboard.js
-
-// Function to fetch JSON data
-async function fetchData() {
-    try {
-        const response = await fetch('api/fossil/wrapdb-fossil.json');
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log('Fetched data:', data);
-        displayProjects(data.subprojects);
-    } catch (error) {
-        console.error('Error fetching JSON:', error);
-    }
-}
-
-// Display subprojects on page load
-fetchData();
-
-// Function to display projects
-function displayProjects(projects) {
+document.addEventListener('DOMContentLoaded', function () {
     const dashboardElement = document.getElementById('dashboard');
-    dashboardElement.innerHTML = '';
-
-    const isMobileView = window.innerWidth <= 600;
-
-    projects.forEach(project => {
-        const projectItem = document.createElement('div');
-        projectItem.className = 'project-item';
-        const description = isMobileView ? project.long_description : project.short_description;
-
-        console.log('Rendering project:', project);
-
-        projectItem.innerHTML = `
-            <p><strong>${encodeHTML(project.name)}</strong></p>
-            <p>${encodeHTML(description)}</p>
-            <p><a href="${encodeHTML(project.repo_link)}" target="_blank">${encodeHTML(project.repo_link)}</a></p>
-            <p>License: ${encodeHTML(project.license)}</p>
-            <p>Min Meson Version: ${encodeHTML(project.min_meson_version)}</p>
-            <p>Wiki Link: <a href="${encodeHTML(project.wiki_link)}" target="_blank">${encodeHTML(project.wiki_link)}</a></p>
-            <p>Wrap Link: <a href="${encodeHTML(project.wrap_link)}" target="_blank"  download="${encodeHTML(subproject.wrap_link)}.wrap">${encodeHTML(project.wrap_link)}</a></p>
-        `;
-        dashboardElement.appendChild(projectItem);
-    });
-}
-
-// Function to encode HTML entities
-function encodeHTML(text) {
-    return document.createElement('div').appendChild(document.createTextNode(text)).parentNode.innerHTML;
-}
-
-// Function to filter the list
-function filterList() {
     const searchInput = document.getElementById('searchInput');
-    const filter = searchInput.value.toLowerCase();
 
-    const subprojectItems = document.querySelectorAll('.subproject-item');
+    // Fetch data from JSON file
+    fetch('wrapdb-fossil.json')
+        .then(response => response.json())
+        .then(data => {
+            displaySubprojects(data.subprojects);
 
-    subprojectItems.forEach(item => {
-        const itemText = item.textContent.toLowerCase();
-        item.style.display = itemText.includes(filter) ? '' : 'none';
-    });
-}
+            // Event listener for search input
+            searchInput.addEventListener('input', function () {
+                const searchTerm = searchInput.value.toLowerCase();
+                const filteredSubprojects = data.subprojects.filter(subproject =>
+                    subproject.name.toLowerCase().includes(searchTerm)
+                );
 
-// Check screen width and apply appropriate view
-function applyResponsiveView() {
-    const screenWidth = window.innerWidth;
-    const dashboardElement = document.getElementById('dashboard');
+                displaySubprojects(filteredSubprojects);
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
 
-    if (screenWidth <= 600) {
-        dashboardElement.classList.add('mobile-view');
-        dashboardElement.classList.remove('desktop-view');
-    } else {
-        dashboardElement.classList.add('desktop-view');
-        dashboardElement.classList.remove('mobile-view');
+    function displaySubprojects(subprojects) {
+        // Clear previous content
+        dashboardElement.innerHTML = '';
+
+        subprojects.forEach(subproject => {
+            const tile = document.createElement('div');
+            tile.className = 'tile';
+
+            const tileHeader = document.createElement('div');
+            tileHeader.className = 'tile-header';
+            tileHeader.innerHTML = `<h2>${subproject.name}</h2>`;
+
+            const tileBody = document.createElement('div');
+            tileBody.className = 'tile-body';
+            tileBody.innerHTML = `<p>${subproject.short_description}</p>`;
+
+            const tileLinks = document.createElement('div');
+            tileLinks.className = 'tile-links';
+            tileLinks.innerHTML = `
+                <a href="${subproject.repo_link}" class="link-button" target="_blank">Repository</a>
+                <a href="${subproject.wiki_link}" class="link-button" target="_blank">Wiki</a>
+                <a href="${subproject.wrap_link}" class="link-button" target="_blank">Documentation</a>
+            `;
+
+            tile.appendChild(tileHeader);
+            tile.appendChild(tileBody);
+            tile.appendChild(tileLinks);
+
+            dashboardElement.appendChild(tile);
+        });
     }
-}
-
-// Apply responsive view on page load and resize
-applyResponsiveView();
-window.addEventListener('resize', applyResponsiveView);
+});
