@@ -27,25 +27,27 @@
         <input type="text" id="searchInput" placeholder="Search by name...">
     </div>
 
-    <div class="dashboard" id="dashboard">
+    <!-- Your HTML structure -->
+<div class="dashboard" id="dashboard">
     <table class="data-table">
         <thead>
             <tr>
-                <!-- Table headers -->
+                <!-- Updated table headers -->
                 <th>Name</th>
                 <th>Short Description</th>
                 <th>License</th>
                 <th>Author</th>
-                <th>Release Date</th>
+                <th>GitHub Repo</th>
             </tr>
         </thead>
-            <tbody id="tableBody">
-                <!-- Rows will be added here dynamically -->
-            </tbody>
-        </table>
-    </div>
+        <tbody id="tableBody">
+            <!-- Rows will be added here dynamically -->
+        </tbody>
+    </table>
+</div>
 
-    <script>
+<!-- Your existing script -->
+<script>
     // Load the JSON data
     fetch('wrapdb-fossil.json')
         .then(response => response.json())
@@ -62,22 +64,26 @@
                 const row = tableBody.insertRow();
 
                 // Create cells for each property in the subproject
-                const properties = ['name', 'short_description', 'license', 'author', 'releases[0].date'];
+                const properties = ['name', 'short_description', 'license', 'author', 'repo_link'];
                 properties.forEach(property => {
                     const cell = row.insertCell();
-                    cell.textContent = property.split('.').reduce((obj, key) => obj[key], subproject);
+                    if (property === 'repo_link') {
+                        // For the GitHub Repo column, create a link
+                        const link = document.createElement('a');
+                        link.href = subproject[property];
+                        link.textContent = 'GitHub Repo';
+                        cell.appendChild(link);
+                    } else {
+                        // For other columns, directly set the text content
+                        cell.textContent = property.split('.').reduce((obj, key) => obj[key], subproject);
+                    }
                 });
-
-                // Add a class to the row based on the license
-                if (subproject.license === 'MPL 2.0') {
-                    row.classList.add('mpl-licensed');
-                }
             });
         })
         .catch(error => {
             console.error('Error fetching data:', error);
         });
-    </script>
+</script>
     <script src="assets/search.js"></script>
 </body>
 
