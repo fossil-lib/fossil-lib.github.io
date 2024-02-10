@@ -97,7 +97,7 @@
       "languages": ["c"]
     },
     {
-      "name": "Fossil XCude 2D Graphics",
+      "name": "Fossil XCude",
       "short_description": "Powerhouse for 2D graphics, offering a versatile set of tools and functions.",
       "long_description": "Unleash your creativity in the visual realm with XCude 2D Graphics. This library is a powerhouse for 2D graphics, offering a versatile set of tools and functions to bring your visualizations to life. From rendering to animation, XCude 2D Graphics empowers developers to craft visually stunning and immersive user experiences.",
       "license": "MPL 2.0",
