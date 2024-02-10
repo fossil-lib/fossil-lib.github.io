@@ -1,4 +1,4 @@
-// styles.scss
+/* styles.css */
 
 #dashboard {
     display: grid;
@@ -10,24 +10,24 @@
     display: block;
 }
 
-// Add styles for the search container
+/* Add styles for the search container */
 .search-container {
     margin-bottom: 20px;
+}
 
-    label {
-        margin-right: 10px;
-    }
+.search-container label {
+    margin-right: 10px;
 }
 
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
-    background-color: #1c1c1c; // Dark background color
-    color: #ADD8E6; // Light Blue text color
+    background-color: #1c1c1c; /* Dark background color */
+    color: #ADD8E6; /* Light Blue text color */
 }
 
 header {
-    background-color: #333; // Dark background color for the header
+    background-color: #333; /* Dark background color for the header */
     padding: 10px;
     text-align: center;
 }
@@ -46,7 +46,7 @@ nav ul li {
 
 nav a {
     text-decoration: none;
-    color: #ADD8E6; // Light Blue text color for navigation links
+    color: #ADD8E6; /* Light Blue text color for navigation links */
     font-weight: bold;
 }
 
@@ -58,17 +58,17 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+}
 
-    th, td {
-        border: 1px solid #ddd;
-        padding: 10px;
-        text-align: left;
-    }
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
 
-    th {
-        background-color: #333; // Dark background color for table header
-        color: white;
-    }
+th {
+    background-color: #333; /* Dark background color for table header */
+    color: white;
 }
 
 h1 {
@@ -80,7 +80,7 @@ nav ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    text-align: center; // Center the menu items on mobile
+    text-align: center; /* Center the menu items on mobile */
 }
 
 nav li {
@@ -90,27 +90,27 @@ nav li {
 
 nav a {
     text-decoration: none;
-    color: #fff; // White
+    color: #fff; /* White */
     padding: 8px 12px;
     border-radius: 4px;
-    background-color: #555; // Gray
-    display: inline-block; // Ensure the links are block elements on mobile
-    margin-bottom: 5px; // Add some spacing between buttons on mobile
+    background-color: #555; /* Gray */
+    display: inline-block; /* Ensure the links are block elements on mobile */
+    margin-bottom: 5px; /* Add some spacing between buttons on mobile */
+}
 
-    &:hover {
-        background-color: #777; // Darker Gray
-    }
+nav a:hover {
+    background-color: #777; /* Darker Gray */
 }
 
 section {
     margin-top: 20px;
 }
 
-// Mobile Styles
+/* Mobile Styles */
 @media only screen and (max-width: 600px) {
     body {
-        font-size: 14px; // Adjust font size for better readability on smaller screens
-        margin: 10px; // Add some margin for better spacing on small screens
+        font-size: 14px; /* Adjust font size for better readability on smaller screens */
+        margin: 10px; /* Add some margin for better spacing on small screens */
     }
 
     nav ul {
@@ -123,20 +123,20 @@ section {
     }
 
     header {
-        padding: 5px; // Adjust header padding for smaller screens
+        padding: 5px; /* Adjust header padding for smaller screens */
     }
 
     table {
-        font-size: 14px; // Adjust table font size for better readability on small screens
+        font-size: 14px; /* Adjust table font size for better readability on small screens */
     }
 
     th, td {
-        padding: 8px; // Adjust cell padding for better spacing on small screens
+        padding: 8px; /* Adjust cell padding for better spacing on small screens */
     }
 
     nav a {
-        padding: 6px 10px; // Adjust button padding for better spacing on small screens
-        font-size: 14px; // Adjust button font size for better readability on small screens
+        padding: 6px 10px; /* Adjust button padding for better spacing on small screens */
+        font-size: 14px; /* Adjust button font size for better readability on small screens */
     }
 
     nav ul {
@@ -149,33 +149,33 @@ section {
     }
 }
 
-// Mobile Styles
+/* Mobile Styles */
 @media only screen and (max-width: 600px) {
     #dashboard.mobile-view {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+    }
 
-        .project-item {
-            width: 80%;
-            margin: 10px;
-            padding: 15px;
-            background-color: #333; // Dark background color for tiles on mobile
-            color: #ADD8E6; // Light Blue text color
-            border-radius: 10px;
-        }
+    .project-item {
+        width: 80%;
+        margin: 10px;
+        padding: 15px;
+        background-color: #333; /* Dark background color for tiles on mobile */
+        color: #ADD8E6; /* Light Blue text color */
+        border-radius: 10px;
     }
 }
 
-// Desktop Styles
+/* Desktop Styles */
 @media only screen and (min-width: 601px) {
     #dashboard.desktop-view {
         width: 100%;
         border-collapse: collapse;
         margin-top: 20px;
+    }
 
-        .project-item {
-            display: none;
-        }
+    .project-item {
+        display: none;
     }
 }
