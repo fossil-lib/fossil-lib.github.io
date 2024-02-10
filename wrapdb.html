@@ -22,7 +22,9 @@
     <label for="searchInput">Search:</label>
     <input type="search" id="searchInput" placeholder="Enter search terms..." oninput="filterList()">
 
-    <table>
+    <div id="tileContainer" class="tile-container"></div>
+
+    <table id="tableView">
         <thead>
             <tr>
                 <th>Dependency</th>
@@ -52,10 +54,24 @@
 
         // Function to display projects
         function displayProjects(projects) {
-            const dashboardElement = document.getElementById('dashboard');
-            dashboardElement.innerHTML = '';
+            const tileContainer = document.getElementById('tileContainer');
+            const tableView = document.getElementById('tableView');
+
+            tileContainer.innerHTML = '';
+            tableView.innerHTML = '';
 
             projects.forEach(project => {
+                const tile = document.createElement('div');
+                tile.className = 'tile';
+                tile.innerHTML = `
+                    <h3>${encodeHTML(project.project)}</h3>
+                    <p>${encodeHTML(project.description)}</p>
+                    <p><a href="${encodeHTML(project.url)}" target="_blank">${encodeHTML(project.url)}</a></p>
+                    <p>${encodeHTML(project.license)}</p>
+                    <p>${encodeHTML(project.languages.join(', '))}</p>
+                `;
+                tileContainer.appendChild(tile);
+
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${encodeHTML(project.project)}</td>
@@ -64,7 +80,7 @@
                     <td>${encodeHTML(project.license)}</td>
                     <td>${encodeHTML(project.languages.join(', '))}</td>
                 `;
-                dashboardElement.appendChild(row);
+                tableView.appendChild(row);
             });
         }
 
@@ -86,6 +102,20 @@
 
             displayProjects(filteredProjects);
         }
+
+        // Responsive design: switch between tile and table views based on screen width
+        window.addEventListener('resize', function() {
+            if (window.innerWidth <= 600) {
+                document.getElementById('tileContainer').style.display = 'flex';
+                document.getElementById('tableView').style.display = 'none';
+            } else {
+                document.getElementById('tileContainer').style.display = 'none';
+                document.getElementById('tableView').style.display = 'table';
+            }
+        });
+
+        // Trigger the resize event on page load to initialize the view
+        window.dispatchEvent(new Event('resize'));
     </script>
 </body>
 </html>
