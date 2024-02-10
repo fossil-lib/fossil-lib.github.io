@@ -17,7 +17,7 @@ header {
 }
 
 .mpl-licensed {
-        background-color: #c0e218; /* Apply a background color for MPL 2.0 licensed rows */
+    background-color: #c0e218; /* Apply a background color for MPL 2.0 licensed rows */
 }
 
 .header img {
@@ -62,93 +62,22 @@ header {
     padding: 20px;
 }
 
-.tile {
-    background-color: #333;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-    margin: 10px;
-    width: 300px;
+/* Table Styles */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 
-.tile-header {
+.data-table th, .data-table td {
+    padding: 12px;
+    border: 1px solid #555;
+    text-align: left;
+}
+
+.data-table th {
     background-color: #555;
-    color: #ffa500; /* Orange tile header text color */
-    padding: 10px;
-    text-align: center;
-}
-
-.tile-body {
-    padding: 15px;
-    text-align: justify;
-}
-
-.tile-body p {
-    margin-bottom: 10px;
-}
-
-.tile-body h2 {
-    text-align: center;
-}
-
-.tile-links {
-    display: flex;
-    justify-content: space-around;
-    padding-top: 15px;
-}
-
-.link-button {
-    background-color: #555;
-    color: #ffa500; /* Orange link button text color */
-    padding: 8px 15px;
-    text-decoration: none;
-    border-radius: 5px;
-    text-align: center;
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-}
-
-nav ul li {
-    margin-right: 20px;
-}
-
-nav ul li a {
-    text-decoration: none;
-    color: #3498db; /* Light blue for menu text */
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease-in-out;
-}
-
-nav ul li a:hover {
-    background-color: #2980b9; /* Darker blue on hover */
-}
-
-.header {
-    text-align: center;
-    padding: 20px;
-}
-
-/* Heading color updated to light blue */
-.header h1 {
-    color: #3498db;
-}
-
-.search-container {
-    text-align: center;
-    padding: 10px;
-}
-
-.dashboard {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 20px;
+    color: #ffa500; /* Orange text color */
 }
 
 /* Text color updated to light blue */
@@ -156,52 +85,7 @@ nav ul li a:hover {
     color: #3498db;
 }
 
-.tile {
-    background-color: #000; /* Black background color */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-    margin: 10px;
-    width: 300px;
-    transition: transform 0.3s ease-in-out;
-}
-
-.tile:hover {
-    transform: scale(1.05);
-}
-
-.tile-header {
-    background-color: #333; /* Dark background color */
-    color: #3498db; /* Light blue text color */
-    padding: 10px;
-    text-align: center;
-}
-
-.tile-body {
-    padding: 15px;
-    text-align: justify;
-    line-height: 1.4;
-}
-
-.tile-links {
-    display: flex;
-    justify-content: space-around;
-    padding-top: 15px;
-}
-
-.link-button {
-    background-color: #3498db; /* Light blue button color */
-    color: #ecf0f1; /* Light text color */
-    padding: 8px 15px;
-    text-decoration: none;
-    border-radius: 5px;
-    text-align: center;
-    transition: background-color 0.3s ease-in-out;
-}
-
-.link-button:hover {
-    background-color: #2980b9; /* Darker blue on hover */
-}
+/* ... (Rest of your existing styles) */
 
 /* Mobile Styles */
 @media (max-width: 768px) {
