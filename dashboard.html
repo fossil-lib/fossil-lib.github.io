@@ -68,6 +68,11 @@
                     const cell = row.insertCell();
                     cell.textContent = property.split('.').reduce((obj, key) => obj[key], subproject);
                 });
+
+                // Add a class to the row based on the license
+                if (subproject.license === 'MPL 2.0') {
+                    row.classList.add('mpl-licensed');
+                }
             });
         })
         .catch(error => {
