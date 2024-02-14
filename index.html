@@ -9,44 +9,85 @@
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
+      background-color: #343a40; /* Dark background color */
+      color: #007BFF; /* Light blue text color */
     }
     h2 {
-      color: #333;
+      color: #007BFF; /* Light blue title text color */
+      font-weight: bold;
     }
-    .repo-tile {
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
       margin-bottom: 20px;
       padding: 15px;
-      border: 1px solid #ddd;
+      border: 1px solid #495057; /* Dark border color */
       border-radius: 5px;
-      background-color: #f8f9fa;
+      background-color: #495057; /* Dark background color */
     }
-    .repo-table th, .repo-table td {
-      padding: 10px;
-      text-align: left;
+    strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .navbar {
+      background-color: #343a40; /* Dark background color for navbar */
+    }
+    .navbar-brand, .navbar-nav .nav-link {
+      color: #007BFF; /* Light blue text color for navbar */
+    }
+    .form-control {
+      background-color: #495057; /* Dark background color for input */
+      color: #007BFF; /* Light blue text color for input */
     }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <h2 class="mt-3">Fossil WrapDB Dashboard</h2>
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">Fossil WrapDB Dashboard</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Website</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/fossil-lib">GitHub Org</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/author-github">Author GitHub</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-3">
+  <h2>GitHub Repositories in fossil-lib Organization</h2>
   <div class="mb-3">
     <input type="text" id="searchInput" class="form-control" placeholder="Search repositories">
   </div>
-  <div class="mb-3">
-    <button class="btn btn-primary" id="toggleViewBtn">Toggle View</button>
-  </div>
-  <div id="repoContainer"></div>
+  <ul id="repoList" class="list-unstyled"></ul>
 </div>
 
 <script>
   const orgName = 'fossil-lib';
-  const excludedRepos = ['.github', 'fossil-lib.github.io'];
+  const excludedRepos = ['.github', 'fossil-lib', 'fossil-lib.github.io'];
 
   async function fetchRepos() {
     try {
       const response = await fetch(`https://api.github.com/orgs/${orgName}/repos`);
-      return await response.json();
+      const repos = await response.json();
+
+      const filteredRepos = repos.filter(repo => !excludedRepos.includes(repo.name));
+
+      displayRepos(filteredRepos);
+      return filteredRepos;
     } catch (error) {
       console.error('Error fetching repositories:', error);
     }
@@ -55,74 +96,38 @@
   async function fetchRepoDetails(repo) {
     try {
       const response = await fetch(`https://api.github.com/repos/${orgName}/${repo.name}`);
-      return await response.json();
+      const repoDetails = await response.json();
+      displayRepoDetails(repoDetails);
     } catch (error) {
       console.error(`Error fetching details for ${repo.name}:`, error);
     }
   }
 
   function displayRepos(repos) {
-    const repoContainer = document.getElementById('repoContainer');
-    repoContainer.innerHTML = ''; // Clear previous content
+    const repoList = document.getElementById('repoList');
 
     repos.forEach(repo => {
-      const repoElement = createRepoElement(repo);
-      repoContainer.appendChild(repoElement);
+      const li = document.createElement('li');
+      li.classList.add('mb-3');
+      li.innerHTML = `<strong>Project Name:</strong> ${repo.name}`;
+      repoList.appendChild(li);
+
+      fetchRepoDetails(repo);
     });
   }
 
-  function createRepoElement(repo) {
-    const repoElement = document.createElement('div');
-    repoElement.classList.add('repo-tile');
-    repoElement.innerHTML = `
-      <strong>Project Name:</strong> ${sanitize(repo.name)}<br>
-      <strong>Author:</strong> ${sanitize(repo.owner.login)}<br>
-      <strong>Version:</strong> ${sanitize(repo.default_branch)}<br>
-      <strong>Wiki Link:</strong> <a href="${sanitize(repo.html_url)}/wiki" target="_blank">Wiki</a><br>
-      <strong>Project Home Page:</strong> <a href="${sanitize(repo.html_url)}" target="_blank">Homepage</a><br>
-      <strong>Project Description:</strong> ${sanitize(repo.description)}<br>
-      <strong>Latest Release:</strong> ${repo.latest_release ? sanitize(repo.latest_release.tag_name) : 'N/A'}<br><br>
+  function displayRepoDetails(repoDetails) {
+    const repoList = document.getElementById('repoList');
+    const li = repoList.lastElementChild; // Get the last li element
+
+    li.innerHTML += `
+      <strong>Author:</strong> ${sanitize(repoDetails.owner.login)}<br>
+      <strong>Version:</strong> ${sanitize(repoDetails.default_branch)}<br>
+      <strong>Repo Wiki:</strong> <a href="${sanitize(repoDetails.html_url)}/wiki" target="_blank">Wiki</a><br>
+      <strong>Repo Page:</strong> <a href="${sanitize(repoDetails.html_url)}" target="_blank">Homepage</a><br>
+      <strong>Project Description:</strong> ${sanitize(repoDetails.description)}<br>
+      <strong>Latest Release:</strong> ${repoDetails.latest_release ? sanitize(repoDetails.latest_release.tag_name) : 'N/A'}<br><br>
     `;
-    return repoElement;
-  }
-
-  function createTable(repos) {
-    const table = document.createElement('table');
-    table.classList.add('table', 'repo-table');
-
-    // Create table header
-    const thead = document.createElement('thead');
-    const headerRow = document.createElement('tr');
-    headerRow.innerHTML = `
-      <th>Project Name</th>
-      <th>Author</th>
-      <th>Version</th>
-      <th>Wiki Link</th>
-      <th>Project Home Page</th>
-      <th>Project Description</th>
-      <th>Latest Release</th>
-    `;
-    thead.appendChild(headerRow);
-    table.appendChild(thead);
-
-    // Create table body
-    const tbody = document.createElement('tbody');
-    repos.forEach(repo => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${sanitize(repo.name)}</td>
-        <td>${sanitize(repo.owner.login)}</td>
-        <td>${sanitize(repo.default_branch)}</td>
-        <td><a href="${sanitize(repo.html_url)}/wiki" target="_blank">Wiki</a></td>
-        <td><a href="${sanitize(repo.html_url)}" target="_blank">Homepage</a></td>
-        <td>${sanitize(repo.description)}</td>
-        <td>${repo.latest_release ? sanitize(repo.latest_release.tag_name) : 'N/A'}</td>
-      `;
-      tbody.appendChild(row);
-    });
-    table.appendChild(tbody);
-
-    return table;
   }
 
   function sanitize(input) {
@@ -130,22 +135,11 @@
     return input ? input.replace(/</g, "&lt;").replace(/>/g, "&gt;") : '';
   }
 
-  async function init() {
-    const repos = await fetchRepos();
-    displayRepos(repos);
-
-    // Add event listener for the search bar
-    document.getElementById('searchInput').addEventListener('input', filterRepos);
-
-    // Add event listener for the toggle view button
-    document.getElementById('toggleViewBtn').addEventListener('click', toggleView);
-  }
-
   function filterRepos() {
     const searchInput = document.getElementById('searchInput');
     const filter = searchInput.value.toLowerCase();
-    const repoContainer = document.getElementById('repoContainer');
-    repoContainer.innerHTML = ''; // Clear previous results
+    const repoList = document.getElementById('repoList');
+    repoList.innerHTML = ''; // Clear previous results
 
     const filteredRepos = repos.filter(repo => {
       return repo.name.toLowerCase().includes(filter);
@@ -154,25 +148,15 @@
     displayRepos(filteredRepos);
   }
 
-  let isTileView = true;
+  // Fetch and display repositories on page load
+  let repos; // Store repositories globally for filtering
+  fetchRepos().then(response => {
+    repos = response;
+    displayRepos(repos);
+  });
 
-  function toggleView() {
-    isTileView = !isTileView;
-    const repos = isTileView ? fetchRepos() : repos; // Refresh data when toggling views
-    const repoContainer = document.getElementById('repoContainer');
-
-    if (isTileView) {
-      repoContainer.innerHTML = ''; // Clear previous content
-      displayRepos(repos);
-    } else {
-      const table = createTable(repos);
-      repoContainer.innerHTML = ''; // Clear previous content
-      repoContainer.appendChild(table);
-    }
-  }
-
-  // Initialize the dashboard
-  init();
+  // Add event listener for the search bar
+  document.getElementById('searchInput').addEventListener('input', filterRepos);
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
