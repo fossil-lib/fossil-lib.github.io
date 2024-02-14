@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fossil WrapDB API Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h2 {
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    input[type="text"] {
+      padding: 8px;
+      margin-top: 10px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Fossil WrapDB API Dashboard</h2>
+<input type="text" id="searchInput" placeholder="Search by Project Name" oninput="filterTable()">
+<table id="repoTable">
+  <thead>
+    <tr>
+      <th>Project Name</th>
+      <th>Description</th>
+      <th>Project Link</th>
+      <th>Wiki Link</th>
+      <th>Latest Version</th>
+    </tr>
+  </thead>
+  <tbody id="repoBody"></tbody>
+</table>
+
+<script>
+  const orgName = 'fossil-lib';
+  const excludedRepos = ['.github', 'fossil-lib.github.io'];
+
+  async function fetchRepos() {
+    try {
+      const response = await fetch(`https://api.github.com/orgs/${orgName}/repos`);
+      const repos = await response.json();
+
+      const filteredRepos = repos.filter(repo => !excludedRepos.includes(repo.name));
+
+      displayRepos(filteredRepos);
+    } catch (error) {
+      console.error('Error fetching repositories:', error);
+    }
+  }
+
+  async function fetchRepoDetails(repo) {
+    try {
+      const detailsResponse = await fetch(`https://api.github.com/repos/${orgName}/${repo.name}`);
+      const details = await detailsResponse.json();
+
+      // Extracting relevant details
+      const { name, description, html_url: projectLink, homepage, releases_url } = details;
+
+      // Fetch the latest release
+      const releaseResponse = await fetch(releases_url);
+      const releases = await releaseResponse.json();
+      const latestRelease = releases[0] ? releases[0].tag_name : 'No releases';
+
+      // Display the details in the table
+      displayRepoDetailsInTable({ name, description, projectLink, homepage, latestRelease });
+    } catch (error) {
+      console.error(`Error fetching details for ${repo.name}:`, error);
+    }
+  }
+
+  function displayRepoDetailsInTable({ name, description, projectLink, homepage, latestRelease }) {
+    const repoBody = document.getElementById('repoBody');
+    const tr = document.createElement('tr');
+
+    // Create HTML for the repository details in a table row
+    tr.innerHTML = `
+      <td>${name}</td>
+      <td>${description || 'No description available'}</td>
+      <td><a href="${projectLink}" target="_blank">${projectLink}</a></td>
+      <td><a href="${homepage}" target="_blank">${homepage || 'Not available'}</a></td>
+      <td>${latestRelease}</td>
+    `;
+
+    repoBody.appendChild(tr);
+  }
+
+  function displayRepos(repos) {
+    const repoBody = document.getElementById('repoBody');
+
+    repos.forEach(async repo => {
+      await fetchRepoDetails(repo);
+    });
+  }
+
+  // Fetch and display repositories on page load
+  fetchRepos();
+
+  function filterTable() {
+    const input = document.getElementById('searchInput').value.toUpperCase();
+    const rows = document.getElementById('repoTable').getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+    for (let i = 0; i < rows.length; i++) {
+      const projectName = rows[i].getElementsByTagName('td')[0].textContent.toUpperCase();
+      if (projectName.indexOf(input) > -1) {
+        rows[i].style.display = '';
+      } else {
+        rows[i].style.display = 'none';
+      }
+    }
+  }
+</script>
+
+</body>
+</html>
