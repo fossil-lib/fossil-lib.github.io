@@ -34,95 +34,88 @@
     </table>
   </div>
 
-  <script>
-    const orgName = 'fossil-lib';
-    const excludedRepos = ['.github', 'fossil-lib.github.io'];
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.2/purify.min.js"></script>
 
-    async function fetchRepos() {
-      try {
-        const response = await axios.get(`https://api.github.com/orgs/${orgName}/repos`);
-        const repos = response.data;
+<script>
+  const orgName = 'fossil-lib';
+  const excludedRepos = ['.github', 'fossil-lib.github.io'];
 
-        const filteredRepos = repos.filter(repo => !excludedRepos.includes(repo.name));
+  async function fetchRepos() {
+    try {
+      const response = await axios.get(`https://api.github.com/orgs/${orgName}/repos`);
+      const repos = response.data.filter(repo => !excludedRepos.includes(repo.name));
 
-        displayRepos(filteredRepos);
-      } catch (error) {
-        console.error('Error fetching repositories:', error);
-      }
-    }
-
-    async function fetchRepoDetails(repo) {
-      try {
+      await Promise.all(repos.map(async repo => {
         const detailsResponse = await axios.get(`https://api.github.com/repos/${orgName}/${repo.name}`);
         const details = detailsResponse.data;
 
-        // Extracting relevant details
-        const { name, description, html_url: projectLink, homepage, language, owner } = details;
-
-        // Fetch the releases
         const releasesResponse = await axios.get(details.releases_url.replace('{/id}', ''));
         const releases = releasesResponse.data;
 
         const latestRelease = releases[0] ? releases[0].tag_name : 'No releases';
 
-        // Display the details in the table
-        displayRepoDetailsInTable({ name, description, projectLink, homepage, language, owner, latestRelease });
-      } catch (error) {
-        console.error(`Error fetching details for ${repo.name}:`, error);
+        displayRepoDetailsInTable({
+          name: details.name,
+          description: details.description,
+          projectLink: details.html_url,
+          homepage: details.homepage,
+          language: details.language,
+          owner: details.owner,
+          latestRelease: latestRelease
+        });
+      }));
+    } catch (error) {
+      console.error('Error fetching repositories:', error);
+    }
+  }
+
+  function sanitizeInput(input) {
+    return DOMPurify.sanitize(input);
+  }
+
+  function displayRepoDetailsInTable({ name, description, projectLink, homepage, language, owner, latestRelease }) {
+    const repoBody = $('#repoBody');
+
+    // Create HTML for the repository details in a table row
+    const tr = $('<tr></tr>').appendTo(repoBody);
+
+    tr.append(`<td>${sanitizeInput(name)}</td>`);
+    tr.append(`<td>${sanitizeInput(description) || 'No description available'}</td>`);
+    tr.append(`<td>${sanitizeInput(owner.login)}</td>`);
+    tr.append(`<td>${sanitizeInput(language) || 'Not specified'}</td>`);
+    tr.append(`<td><a href="${sanitizeInput(projectLink)}" target="_blank">${sanitizeInput(projectLink)}</a></td>`);
+    tr.append(`<td><a href="${sanitizeInput(homepage)}" target="_blank">${sanitizeInput(homepage) || 'Not available'}</a></td>`);
+    tr.append(`<td>${sanitizeInput(latestRelease)}</td>`);
+  }
+
+  // Fetch and display repositories on page load
+  fetchRepos();
+
+  function filterTable() {
+    const input = sanitizeInput($('#searchInput').val()).toUpperCase();
+    const rows = $('#repoBody').find('tr');
+
+    rows.each(function () {
+      const projectName = sanitizeInput($(this).find('td').eq(0).text()).toUpperCase();
+      const description = sanitizeInput($(this).find('td').eq(1).text()).toUpperCase();
+      const author = sanitizeInput($(this).find('td').eq(2).text()).toUpperCase();
+      const language = sanitizeInput($(this).find('td').eq(3).text()).toUpperCase();
+
+      const matchProjectName = projectName.indexOf(input) > -1;
+      const matchDescription = description.indexOf(input) > -1;
+      const matchAuthor = author.indexOf(input) > -1;
+      const matchLanguage = language.indexOf(input) > -1;
+
+      if (matchProjectName || matchDescription || matchAuthor || matchLanguage) {
+        $(this).show();
+      } else {
+        $(this).hide();
       }
-    }
-
-    function sanitizeInput(input) {
-      return DOMPurify.sanitize(input);
-    }
-
-    function displayRepoDetailsInTable({ name, description, projectLink, homepage, language, owner, latestRelease }) {
-      const repoBody = $('#repoBody');
-
-      // Create HTML for the repository details in a table row
-      const tr = $('<tr></tr>').appendTo(repoBody);
-
-      tr.append(`<td>${sanitizeInput(name)}</td>`);
-      tr.append(`<td>${sanitizeInput(description) || 'No description available'}</td>`);
-      tr.append(`<td>${sanitizeInput(owner.login)}</td>`);
-      tr.append(`<td>${sanitizeInput(language) || 'Not specified'}</td>`);
-      tr.append(`<td><a href="${sanitizeInput(projectLink)}" target="_blank">${sanitizeInput(projectLink)}</a></td>`);
-      tr.append(`<td><a href="${sanitizeInput(homepage)}" target="_blank">${sanitizeInput(homepage) || 'Not available'}</a></td>`);
-      tr.append(`<td>${sanitizeInput(latestRelease)}</td>`);
-    }
-
-    function displayRepos(repos) {
-      repos.forEach(async repo => {
-        await fetchRepoDetails(repo);
-      });
-    }
-
-    // Fetch and display repositories on page load
-    fetchRepos();
-
-    function filterTable() {
-      const input = sanitizeInput($('#searchInput').val()).toUpperCase();
-      const rows = $('#repoBody').find('tr');
-
-      rows.each(function() {
-        const projectName = sanitizeInput($(this).find('td').eq(0).text()).toUpperCase();
-        const description = sanitizeInput($(this).find('td').eq(1).text()).toUpperCase();
-        const author = sanitizeInput($(this).find('td').eq(2).text()).toUpperCase();
-        const language = sanitizeInput($(this).find('td').eq(3).text()).toUpperCase();
-
-        const matchProjectName = projectName.indexOf(input) > -1;
-        const matchDescription = description.indexOf(input) > -1;
-        const matchAuthor = author.indexOf(input) > -1;
-        const matchLanguage = language.indexOf(input) > -1;
-
-        if (matchProjectName || matchDescription || matchAuthor || matchLanguage) {
-          $(this).show();
-        } else {
-          $(this).hide();
-        }
-      });
-    }
-  </script>
+    });
+  }
+</script>
 
 </body>
 </html>
