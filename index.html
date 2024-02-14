@@ -15,15 +15,11 @@
     h2 {
       color: #2196F3; /* Blue text color */
     }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    li {
-      margin-bottom: 20px;
-      padding: 15px;
-      border-radius: 5px;
+    .card {
       background-color: #2E2E2E; /* Dark background color */
+      border: 1px solid #424242; /* Extra-dark color for card border */
+      border-radius: 5px;
+      margin-bottom: 20px;
     }
     strong {
       display: block;
@@ -43,7 +39,7 @@
   <div class="mb-3">
     <input type="text" id="searchInput" class="form-control" placeholder="Search repositories">
   </div>
-  <ul id="repoList" class="list-unstyled"></ul>
+  <div id="repoList" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"></div>
 </div>
 
 <script>
@@ -68,7 +64,7 @@
     try {
       const response = await fetch(`https://api.github.com/repos/${orgName}/${repo.name}`);
       const repoDetails = await response.json();
-      displayRepoDetails(repoDetails);
+      return repoDetails;
     } catch (error) {
       console.error(`Error fetching details for ${repo.name}:`, error);
     }
@@ -77,28 +73,25 @@
   function displayRepos(repos) {
     const repoList = document.getElementById('repoList');
 
-    repos.forEach(repo => {
-      const li = document.createElement('li');
-      li.classList.add('mb-3', 'p-3', 'border', 'border-radius');
-      li.innerHTML = `<strong>Project Name:</strong> ${repo.name}`;
-      repoList.appendChild(li);
+    repos.forEach(async repo => {
+      const repoDetails = await fetchRepoDetails(repo);
 
-      fetchRepoDetails(repo);
+      const card = document.createElement('div');
+      card.classList.add('card', 'col');
+      card.innerHTML = `
+        <div class="card-body">
+          <h5 class="card-title">${sanitize(repo.name)}</h5>
+          <strong>Author:</strong> ${sanitize(repoDetails.owner.login)}<br>
+          <strong>Version:</strong> ${sanitize(repoDetails.default_branch)}<br>
+          <strong>Wiki Link:</strong> <a href="${sanitize(repoDetails.html_url)}/wiki" target="_blank">Wiki</a><br>
+          <strong>Project Home Page:</strong> <a href="${sanitize(repoDetails.html_url)}" target="_blank">Homepage</a><br>
+          <strong>Project Description:</strong> ${sanitize(repoDetails.description)}<br>
+          <strong>Latest Release:</strong> ${repoDetails.latest_release ? sanitize(repoDetails.latest_release.tag_name) : 'N/A'}<br>
+        </div>
+      `;
+
+      repoList.appendChild(card);
     });
-  }
-
-  function displayRepoDetails(repoDetails) {
-    const repoList = document.getElementById('repoList');
-    const li = repoList.lastElementChild; // Get the last li element
-
-    li.innerHTML += `
-      <strong>Author:</strong> ${sanitize(repoDetails.owner.login)}<br>
-      <strong>Version:</strong> ${sanitize(repoDetails.default_branch)}<br>
-      <strong>Wiki Link:</strong> <a href="${sanitize(repoDetails.html_url)}/wiki" target="_blank">Wiki</a><br>
-      <strong>Project Home Page:</strong> <a href="${sanitize(repoDetails.html_url)}" target="_blank">Homepage</a><br>
-      <strong>Project Description:</strong> ${sanitize(repoDetails.description)}<br>
-      <strong>Latest Release:</strong> ${repoDetails.latest_release ? sanitize(repoDetails.latest_release.tag_name) : 'N/A'}<br><br>
-    `;
   }
 
   function sanitize(input) {
