@@ -187,8 +187,8 @@
         const { name, description, html_url: projectLink, homepage, language, owner, releases_url } = details;
 
         // Fetch the latest release
-        const releaseResponse = await fetch(releases_url);
-        const releases = await releaseResponse.json();
+        const releasesResponse = await fetch(`https://api.github.com/repos/${orgName}/${repo.name}/releases`);
+        const releases = await releasesResponse.json();
         const latestRelease = releases[0] ? releases[0].tag_name : 'No releases';
 
         // Display the details in the table
@@ -197,7 +197,7 @@
         console.error(`Error fetching details for ${repo.name}:`, error);
       }
     }
-
+    
     function sanitizeInput(input) {
       return DOMPurify.sanitize(input);
     }
