@@ -1,9 +1,0 @@
-# ================ #
-#  FSCL Wrap File. #
-# ================ #
-[wrap-git]
-url = https://github.com/fossil-lib/fscl-xdata-c.git
-revision = main
-
-[provide]
-fscl-xdata-c = fscl_xdata_c_dep

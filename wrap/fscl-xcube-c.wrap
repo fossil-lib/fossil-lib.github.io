@@ -1,9 +1,0 @@
-# ================ #
-#  FSCL Wrap File. #
-# ================ #
-[wrap-git]
-url = https://github.com/fossil-lib/fscl-xcube-c.git
-revision = main
-
-[provide]
-fscl-xcube-c = fscl_xcube_c_dep
