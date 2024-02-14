@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fossil WrapDB</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.2/purify.min.js"></script>
   <style>
     body {
       font-family: 'Courier New', Courier, monospace;
@@ -160,85 +162,93 @@
   </table>
 
   <script>
-  const orgName = 'fossil-lib';
-  const excludedRepos = ['.github', 'fossil-lib.github.io'];
+    const orgName = 'fossil-lib';
+    const excludedRepos = ['.github', 'fossil-lib.github.io'];
 
-  async function fetchRepos() {
-    try {
-      const response = await fetch(`https://api.github.com/orgs/${orgName}/repos`);
-      const repos = await response.json();
+    async function fetchRepos() {
+      try {
+        const response = await fetch(`https://api.github.com/orgs/${orgName}/repos`);
+        const repos = await response.json();
 
-      const filteredRepos = repos.filter(repo => !excludedRepos.includes(repo.name));
+        const filteredRepos = repos.filter(repo => !excludedRepos.includes(repo.name));
 
-      displayRepos(filteredRepos);
-    } catch (error) {
-      console.error('Error fetching repositories:', error);
-    }
-  }
-
-  async function fetchRepoDetails(repo) {
-    try {
-      const detailsResponse = await fetch(`https://api.github.com/repos/${orgName}/${repo.name}`);
-      const details = await detailsResponse.json();
-
-      // Extracting relevant details
-      const { name, description, html_url: projectLink, homepage, language, owner, releases_url } = details;
-
-      // Fetch the latest release
-      const releaseResponse = await fetch(releases_url);
-      const releases = await releaseResponse.json();
-      const latestRelease = releases[0] ? releases[0].tag_name : 'No releases';
-
-      // Display the details in the table
-      displayRepoDetailsInTable({ name, description, projectLink, homepage, language, owner, latestRelease });
-    } catch (error) {
-      console.error(`Error fetching details for ${repo.name}:`, error);
-    }
-  }
-
-  function displayRepoDetailsInTable({ name, description, projectLink, homepage, language, owner, latestRelease }) {
-    const repoBody = document.getElementById('repoBody');
-    const tr = document.createElement('tr');
-
-    // Create HTML for the repository details in a table row
-    tr.innerHTML = `
-      <td>${name}</td>
-      <td>${description || 'No description available'}</td>
-      <td>${owner.login}</td>
-      <td>${language || 'Not specified'}</td>
-      <td><a href="${projectLink}" target="_blank">${projectLink}</a></td>
-      <td><a href="${homepage}" target="_blank">${homepage || 'Not available'}</a></td>
-      <td>${latestRelease}</td>
-    `;
-
-    repoBody.appendChild(tr);
-  }
-
-  function displayRepos(repos) {
-    const repoBody = document.getElementById('repoBody');
-
-    repos.forEach(async repo => {
-      await fetchRepoDetails(repo);
-    });
-  }
-
-  // Fetch and display repositories on page load
-  fetchRepos();
-
-  function filterTable() {
-    const input = document.getElementById('searchInput').value.toUpperCase();
-    const rows = document.getElementById('repoTable').getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-
-    for (let i = 0; i < rows.length; i++) {
-      const projectName = rows[i].getElementsByTagName('td')[0].textContent.toUpperCase();
-      if (projectName.indexOf(input) > -1) {
-        rows[i].style.display = '';
-      } else {
-        rows[i].style.display = 'none';
+        displayRepos(filteredRepos);
+      } catch (error) {
+        console.error('Error fetching repositories:', error);
       }
     }
-  }
-</script>
+
+    async function fetchRepoDetails(repo) {
+      try {
+        const detailsResponse = await fetch(`https://api.github.com/repos/${orgName}/${repo.name}`);
+        const details = await detailsResponse.json();
+
+        // Extracting relevant details
+        const { name, description, html_url: projectLink, homepage, language, owner, releases_url } = details;
+
+        // Fetch the latest release
+        const releaseResponse = await fetch(releases_url);
+        const releases = await releaseResponse.json();
+        const latestRelease = releases[0] ? releases[0].tag_name : 'No releases';
+
+        // Display the details in the table
+        displayRepoDetailsInTable({ name, description, projectLink, homepage, language, owner, latestRelease });
+      } catch (error) {
+        console.error(`Error fetching details for ${repo.name}:`, error);
+      }
+    }
+
+    function sanitizeInput(input) {
+      return DOMPurify.sanitize(input);
+    }
+
+    function displayRepoDetailsInTable({ name, description, projectLink, homepage, language, owner, latestRelease }) {
+      const repoBody = $('#repoBody');
+
+      // Create HTML for the repository details in a table row
+      const tr = $('<tr></tr>').appendTo(repoBody);
+
+      tr.append(`<td>${sanitizeInput(name)}</td>`);
+      tr.append(`<td>${sanitizeInput(description) || 'No description available'}</td>`);
+      tr.append(`<td>${sanitizeInput(owner.login)}</td>`);
+      tr.append(`<td>${sanitizeInput(language) || 'Not specified'}</td>`);
+      tr.append(`<td><a href="${sanitizeInput(projectLink)}" target="_blank">${sanitizeInput(projectLink)}</a></td>`);
+      tr.append(`<td><a href="${sanitizeInput(homepage)}" target="_blank">${sanitizeInput(homepage) || 'Not available'}</a></td>`);
+      tr.append(`<td>${sanitizeInput(latestRelease)}</td>`);
+    }
+
+    function displayRepos(repos) {
+      repos.forEach(async repo => {
+        await fetchRepoDetails(repo);
+      });
+    }
+
+    // Fetch and display repositories on page load
+    fetchRepos();
+
+    function filterTable() {
+      const input = sanitizeInput($('#searchInput').val()).toUpperCase();
+      const rows = $('#repoBody').find('tr');
+
+      rows.each(function() {
+        const projectName = sanitizeInput($(this).find('td').eq(0).text()).toUpperCase();
+        const description = sanitizeInput($(this).find('td').eq(1).text()).toUpperCase();
+        const author = sanitizeInput($(this).find('td').eq(2).text()).toUpperCase();
+        const language = sanitizeInput($(this).find('td').eq(3).text()).toUpperCase();
+
+        const matchProjectName = projectName.indexOf(input) > -1;
+        const matchDescription = description.indexOf(input) > -1;
+        const matchAuthor = author.indexOf(input) > -1;
+        const matchLanguage = language.indexOf(input) > -1;
+
+        if (matchProjectName || matchDescription || matchAuthor || matchLanguage) {
+          $(this).show();
+        } else {
+          $(this).hide();
+        }
+      });
+    }
+  </script>
 
 </body>
 </html>
