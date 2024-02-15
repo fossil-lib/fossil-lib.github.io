@@ -99,7 +99,7 @@
           <div class="card-body">
             <h5 class="card-title">${sanitize(repo.name)}</h5>
             <strong>Author:</strong> ${sanitize(repoDetails.owner.login)}<br>
-            <strong>Version:</strong> ${sanitize(repoDetails.default_branch)}<br>
+            <strong>Version:</strong> <a href="${sanitize(repoDetails.html_url)}/tree/${sanitize(repoDetails.default_branch)}" target="_blank">${sanitize(repoDetails.default_branch)}</a><br>
             <strong>Wiki Link:</strong> <a href="${sanitize(repoDetails.html_url)}/wiki" target="_blank">Wiki</a><br>
             <strong>Repository:</strong> <a href="${sanitize(repoDetails.html_url)}" target="_blank">Repository</a><br>
             <strong>Homepage:</strong> <a href="${sanitize(repoDetails.homepage)}" target="_blank">${sanitize(repoDetails.homepage)}</a><br>
