@@ -9,28 +9,32 @@
     body {
       font-family: Arial, sans-serif;
       background-color: #121212;
-      color: #2196F3;
+      color: #2196F3; /* Blue text color */
       margin: 20px;
     }
     h2 {
-      color: #2196F3;
+      color: #2196F3; /* Blue text color */
     }
     .card {
-      background-color: #2E2E2E;
-      border: 1px solid #424242;
+      background-color: #2E2E2E; /* Dark background color */
+      border: 1px solid #424242; /* Extra-dark color for card border */
       border-radius: 5px;
       margin-bottom: 20px;
     }
     .card-title {
-      color: #2196F3;
+      color: #2196F3; /* Bright blue text color for card title */
     }
     .card-body {
-      color: #ffffff;
+      color: #ffffff; /* White text color for card body */
+    }
+    strong {
+      display: block;
+      margin-bottom: 5px;
     }
     input.form-control {
-      background-color: #2E2E2E;
-      color: #2196F3;
-      border: 1px solid #424242;
+      background-color: #2E2E2E; /* Dark background color for input */
+      color: #2196F3; /* Blue text color for input */
+      border: 1px solid #424242; /* Extra-dark color for input border */
     }
   </style>
 </head>
@@ -51,7 +55,12 @@
   async function fetchRepos() {
     try {
       const response = await fetch(`https://api.github.com/orgs/${orgName}/repos`);
-      return await response.json();
+      const repos = await response.json();
+
+      const filteredRepos = repos.filter(repo => !excludedRepos.includes(repo.name));
+
+      displayRepos(filteredRepos);
+      return filteredRepos; // Return filtered repos for future use
     } catch (error) {
       console.error('Error fetching repositories:', error);
     }
@@ -60,7 +69,8 @@
   async function fetchRepoDetails(repo) {
     try {
       const response = await fetch(`https://api.github.com/repos/${orgName}/${repo.name}`);
-      return await response.json();
+      const repoDetails = await response.json();
+      return repoDetails;
     } catch (error) {
       console.error(`Error fetching details for ${repo.name}:`, error);
     }
@@ -71,7 +81,9 @@
       const response = await fetch(`https://api.github.com/repos/${orgName}/${repo.name}/branches`);
       const branches = await response.json();
 
+      // Look for a branch with the specified format
       const versionBranch = branches.find(branch => /^\d+\.\d+\.\d+$/.test(branch.name));
+
       return versionBranch ? versionBranch.name : 'N/A';
     } catch (error) {
       console.error(`Error fetching branches for ${repo.name}:`, error);
@@ -91,7 +103,11 @@
       card.innerHTML = `
         <div class="card-body">
           <h5 class="card-title">${sanitize(repo.name)}</h5>
-          <p>${sanitize(repoDetails.description)}</p>
+          <strong>Author:</strong> ${sanitize(repoDetails.owner.login)}<br>
+          <strong>Version:</strong> ${sanitize(repoDetails.default_branch)}<br>
+          <strong>Wiki Link:</strong> <a href="${sanitize(repoDetails.html_url)}/wiki" target="_blank">Wiki</a><br>
+          <strong>Project Home Page:</strong> <a href="${sanitize(repoDetails.html_url)}" target="_blank">Homepage</a><br>
+          <strong>Project Description:</strong> ${sanitize(repoDetails.description)}<br>
           <strong>Latest Release:</strong> ${sanitize(latestRelease)}<br>
         </div>
       `;
@@ -101,6 +117,7 @@
   }
 
   function sanitize(input) {
+    // Basic HTML escaping to prevent XSS
     return input ? input.replace(/</g, "&lt;").replace(/>/g, "&gt;") : '';
   }
 
@@ -108,20 +125,22 @@
     const searchInput = document.getElementById('searchInput');
     const filter = searchInput.value.toLowerCase();
     const repoList = document.getElementById('repoList');
-    repoList.innerHTML = '';
+    repoList.innerHTML = ''; // Clear previous results
 
-    const filteredRepos = repos.filter(repo => repo.name.toLowerCase().includes(filter));
+    const filteredRepos = repos.filter(repo => {
+      return repo.name.toLowerCase().includes(filter);
+    });
+
     displayRepos(filteredRepos);
   }
 
-  let repos; // Declare repos outside of the fetchRepos function
-
   // Fetch and display repositories on page load
   fetchRepos().then(response => {
-    repos = response.filter(repo => !excludedRepos.includes(repo.name));
+    repos = response;
     displayRepos(repos);
   });
 
+  // Add event listener for the search bar
   document.getElementById('searchInput').addEventListener('input', filterRepos);
 </script>
 
