@@ -60,7 +60,6 @@
 
       const filteredRepos = repos.filter(repo => !excludedRepos.includes(repo.name));
 
-      displayRepos(filteredRepos);
       return filteredRepos; // Return filtered repos for future use
     } catch (error) {
       console.error('Error fetching repositories:', error);
@@ -81,7 +80,7 @@
     const repoList = document.getElementById('repoList');
 
     repos.forEach(async repo => {
-      if (!isRepoDisplayed(repo.name)) {
+      if (!displayedRepos.includes(repo.name)) {
         const repoDetails = await fetchRepoDetails(repo);
 
         const card = document.createElement('div');
@@ -101,10 +100,6 @@
         displayedRepos.push(repo.name);
       }
     });
-  }
-
-  function isRepoDisplayed(repoName) {
-    return displayedRepos.includes(repoName);
   }
 
   function sanitize(input) {
