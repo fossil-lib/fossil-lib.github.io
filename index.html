@@ -51,6 +51,7 @@
 <script>
   const orgName = 'fossil-lib';
   const excludedRepos = ['.github', 'fossil-lib.github.io'];
+  let displayedRepos = [];
 
   async function fetchRepos() {
     try {
@@ -80,23 +81,30 @@
     const repoList = document.getElementById('repoList');
 
     repos.forEach(async repo => {
-      const repoDetails = await fetchRepoDetails(repo);
+      if (!isRepoDisplayed(repo.name)) {
+        const repoDetails = await fetchRepoDetails(repo);
 
-      const card = document.createElement('div');
-      card.classList.add('card', 'col');
-      card.innerHTML = `
-        <div class="card-body">
-          <h5 class="card-title">${sanitize(repo.name)}</h5>
-          <strong>Author:</strong> ${sanitize(repoDetails.owner.login)}<br>
-          <strong>Version:</strong> ${sanitize(repoDetails.default_branch)}<br>
-          <strong>Wiki Link:</strong> <a href="${sanitize(repoDetails.html_url)}/wiki" target="_blank">Wiki</a><br>
-          <strong>Project Home Page:</strong> <a href="${sanitize(repoDetails.html_url)}" target="_blank">Homepage</a><br>
-          <strong>Project Description:</strong> ${sanitize(repoDetails.description)}<br>
-        </div>
-      `;
+        const card = document.createElement('div');
+        card.classList.add('card', 'col');
+        card.innerHTML = `
+          <div class="card-body">
+            <h5 class="card-title">${sanitize(repo.name)}</h5>
+            <strong>Author:</strong> ${sanitize(repoDetails.owner.login)}<br>
+            <strong>Version:</strong> ${sanitize(repoDetails.default_branch)}<br>
+            <strong>Wiki Link:</strong> <a href="${sanitize(repoDetails.html_url)}/wiki" target="_blank">Wiki</a><br>
+            <strong>Project Home Page:</strong> <a href="${sanitize(repoDetails.html_url)}" target="_blank">Homepage</a><br>
+            <strong>Project Description:</strong> ${sanitize(repoDetails.description)}<br>
+          </div>
+        `;
 
-      repoList.appendChild(card);
+        repoList.appendChild(card);
+        displayedRepos.push(repo.name);
+      }
     });
+  }
+
+  function isRepoDisplayed(repoName) {
+    return displayedRepos.includes(repoName);
   }
 
   function sanitize(input) {
@@ -118,6 +126,7 @@
   }
 
   // Fetch and display repositories on page load
+  let repos;
   fetchRepos().then(response => {
     repos = response;
     displayRepos(repos);
