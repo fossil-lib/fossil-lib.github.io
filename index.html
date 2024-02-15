@@ -31,6 +31,9 @@
       display: block;
       margin-bottom: 5px;
     }
+    a {
+      color: #2196F3; /* Blue text color for links */
+    }
     input.form-control {
       background-color: #2E2E2E; /* Dark background color for input */
       color: #2196F3; /* Blue text color for input */
@@ -98,7 +101,8 @@
             <strong>Author:</strong> ${sanitize(repoDetails.owner.login)}<br>
             <strong>Version:</strong> ${sanitize(repoDetails.default_branch)}<br>
             <strong>Wiki Link:</strong> <a href="${sanitize(repoDetails.html_url)}/wiki" target="_blank">Wiki</a><br>
-            <strong>Project Home Page:</strong> <a href="${sanitize(repoDetails.html_url)}" target="_blank">Homepage</a><br>
+            <strong>Repository:</strong> <a href="${sanitize(repoDetails.html_url)}" target="_blank">Repository</a><br>
+            <strong>Homepage:</strong> <a href="${sanitize(repoDetails.homepage)}" target="_blank">${sanitize(repoDetails.homepage)}</a><br>
             <strong>Project Description:</strong> ${sanitize(repoDetails.description)}<br>
           </div>
         `;
