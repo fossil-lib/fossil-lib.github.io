@@ -12,35 +12,28 @@
       color: #2196F3; /* Blue text color */
       margin: 20px;
     }
-    
     h2 {
       color: #2196F3; /* Blue text color */
     }
-    
     .card {
       background-color: #2E2E2E; /* Dark background color */
       border: 1px solid #424242; /* Extra-dark color for card border */
       border-radius: 5px;
       margin-bottom: 20px;
     }
-    
     .card-title {
       color: #2196F3; /* Bright blue text color for card title */
     }
-    
     .card-body {
       color: #ffffff; /* White text color for card body */
     }
-    
     strong {
       display: block;
       margin-bottom: 5px;
     }
-    
     a {
       color: #2196F3; /* Blue text color for links */
     }
-    
     input.form-control {
       background-color: #2E2E2E; /* Dark background color for input */
       color: #2196F3; /* Blue text color for input */
@@ -52,9 +45,7 @@
 
 <div class="container">
   <h2 class="mt-3">Fossil WrapDB Dashboard</h2>
-  <div class="container">
   <p>Discover the Fossil WrapDB Dashboard – your gateway to the world of Fossil repositories. This platform is tailored to make your exploration of Fossil projects effortless. The home page welcomes you with a user-friendly interface, allowing you to search for repositories, learn about their authors, and delve into project details. Fossil WrapDB is more than just a dashboard; it's a hub for Fossil enthusiasts to connect, contribute, and stay informed about the latest developments in the Fossil ecosystem. Start your journey with Fossil WrapDB, where every click opens up a new realm of possibilities in the world of Fossil version control.</p>
-</div>
   <div class="mb-3">
     <input type="text" id="searchInput" class="form-control" placeholder="Search repositories">
   </div>
@@ -64,7 +55,7 @@
     <button id="nextBtn" class="btn btn-primary" onclick="changePage(1)" disabled>Next</button>
   </div>
 </div>
-  
+
 <script>
   const orgName = 'fossil-lib';
   const excludedRepos = ['.github', 'fossil-lib.github.io'];
