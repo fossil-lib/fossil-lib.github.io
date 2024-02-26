@@ -60,6 +60,7 @@
       <tr>
         <th>Name</th>
         <th>Author</th>
+        <th>Language</th>
         <th>Wiki Link</th>
         <th>Repository</th>
         <th>Homepage</th>
@@ -116,6 +117,7 @@
         row.innerHTML = `
           <td>${sanitize(repo.name)}</td>
           <td>${sanitize(repoDetails.owner.login)}</td>
+          <td>${sanitize(repoDetails.language)}</td>
           <td><a href="${sanitize(repoDetails.html_url)}/wiki" target="_blank">Wiki</a></td>
           <td><a href="${sanitize(repoDetails.html_url)}" target="_blank">Repository</a></td>
           <td><a href="${sanitize(repoDetails.homepage)}" target="_blank">${sanitize(repoDetails.homepage)}</a></td>
