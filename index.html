@@ -19,6 +19,7 @@
       width: 100%;
       border-collapse: collapse;
       color: #ffffff; /* White text color for table */
+      margin-top: 10px;
     }
     th, td {
       border: 1px solid #424242; /* Extra-dark color for table border */
@@ -45,6 +46,14 @@
       background-color: #2E2E2E; /* Dark background color for input */
       color: #2196F3; /* Blue text color for input */
       border: 1px solid #424242; /* Extra-dark color for input border */
+    }
+
+    /* Responsive styles */
+    @media (max-width: 767px) {
+      th, td {
+        display: block;
+        width: 100%;
+      }
     }
   </style>
 </head>
