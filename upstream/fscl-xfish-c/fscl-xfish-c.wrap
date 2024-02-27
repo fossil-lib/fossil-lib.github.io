@@ -1,0 +1,9 @@
+# ================ #
+#  FSCL Wrap File. #
+# ================ #
+[wrap-git]
+url = https://github.com/fossil-lib/fscl-xfish-c.git
+revision = main
+
+[provide]
+fscl-xfish-c = fscl_xfish_c_dep
