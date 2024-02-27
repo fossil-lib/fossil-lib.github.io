@@ -1,0 +1,9 @@
+# ================ #
+#  FSCL Wrap File. #
+# ================ #
+[wrap-git]
+url = https://github.com/fossil-lib/fscl-xtest-cpp.git
+revision = main
+
+[provide]
+fscl-xtest-cpp = fscl_xtest_cpp_dep
