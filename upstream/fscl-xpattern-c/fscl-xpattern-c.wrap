@@ -1,0 +1,9 @@
+# ================ #
+#  FSCL Wrap File. #
+# ================ #
+[wrap-git]
+url = https://github.com/fossil-lib/fscl-xpattern-c.git
+revision = main
+
+[provide]
+fscl-xpattern-c = fscl_xpattern_c_dep
